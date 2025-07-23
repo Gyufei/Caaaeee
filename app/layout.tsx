@@ -5,6 +5,7 @@ import SWRGlobal from '@/components/swr-global';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import PrivyGlobalProvider from '@/components/privy-global';
+import CommonLayout from '@/components/layout/common';
 
 export const metadata: Metadata = {
   title: 'DeTake Admin',
@@ -23,7 +24,9 @@ export default async function RootLayout({
       <body className={`${SequelSansFont.variable} antialiased`}>
         <NextIntlClientProvider>
           <PrivyGlobalProvider>
-            <SWRGlobal>{children}</SWRGlobal>
+            <SWRGlobal>
+              <CommonLayout>{children}</CommonLayout>
+            </SWRGlobal>
           </PrivyGlobalProvider>
         </NextIntlClientProvider>
       </body>

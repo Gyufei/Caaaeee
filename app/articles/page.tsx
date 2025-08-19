@@ -11,6 +11,7 @@ import Share from '@/components/icons/share';
 import Stack from '@/components/icons/stack';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 // 模拟数据
@@ -137,11 +138,25 @@ export default function Articles() {
         </div>
 
         {/* Write 按钮 */}
-        <Button className="bg-main rounded-none hover:bg-main text-white h-12">
-          <Edit className="w-5 h-5" />
-          <span className="text-sm">Write</span>
-          <ChevronDown className="w-5 h-5" />
-        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button className="bg-main rounded-none hover:bg-main text-white h-12">
+              <Edit className="w-5 h-5" />
+              <span className="text-sm">Write</span>
+              <ChevronDown className="w-5 h-5" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[140px] p-[10px] rounded-none border border-border">
+            <div className="flex flex-col">
+              <button className="px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors">
+                Article
+              </button>
+              <button className="px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors">
+                Tweet
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {/* 数据表格 */}
@@ -187,15 +202,20 @@ export default function Articles() {
             <tbody className="divide-y divide-gray-200">
               {mockArticles.map((article) => (
                 <tr key={article.id} className="hover:bg-gray-50 border-b last:border-b-0">
-                  <td className="px-4 py-4 text-center text-[#052019] border-r">{article.id}</td>
+                  <td className="px-4 py-4 text-center text-foreground border-r">{article.id}</td>
                   <td className="px-4 py-4 border-r">
                     <div className="flex flex-col">
-                      <div className="text-sm font-medium text-[#909399]">
+                      <div className="text-sm font-normal text-[#909399]">
                         {article.hash}(Hash值)
                       </div>
                       <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-purple-600 rounded-sm"></div>
-                        <div className="text-sm text-[#052019]">{article.title}</div>
+                        <Image
+                          src="/images/article-placeholder.png"
+                          alt="art-ph"
+                          width={16}
+                          height={16}
+                        />
+                        <div className="text-sm text-foreground">{article.title}</div>
                       </div>
                     </div>
                   </td>
@@ -203,16 +223,12 @@ export default function Articles() {
                   <td className="px-4 py-4 border-r text-center">{article.pv}</td>
                   <td className="px-4 py-4 border-r text-center">
                     <div className="flex items-center gap-x-1">
-                      <div className="flex flex-col space-x-2">
+                      <div className="flex flex-col">
                         <div className="flex items-center">
                           <Image src="/icons/usdc.svg" alt="usdc" width={16} height={16} />
-                          <div className="text-sm text-gray-900">
-                            {article.bonusDistributed.amount}
-                          </div>
+                          <div>{article.bonusDistributed.amount}</div>
                         </div>
-                        <div className="text-xs text-gray-500">
-                          {article.bonusDistributed.contract}
-                        </div>
+                        <div>{article.bonusDistributed.contract}</div>
                       </div>
                       <Share className="w-4 h-4 text-[#909399]" />
                     </div>

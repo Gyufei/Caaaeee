@@ -1,8 +1,10 @@
 'use client';
 
+import { toast } from 'sonner';
+
 import React, { useRef, useState } from 'react';
 
-import Image from 'next/image';
+import NextImage from 'next/image';
 
 import { cn } from '@/lib/utils';
 
@@ -10,19 +12,22 @@ import { cn } from '@/lib/utils';
 type UploadStatus = 'idle' | 'uploading' | 'done' | 'error';
 
 interface UploadProps {
-  // 上传函数，返回图片 URL
   uploadFn?: (file: File, onProgress: (percent: number) => void) => Promise<string>;
-  // 初始图片
   value?: string;
-  // 变更回调
   onChange?: (url?: string) => void;
-  // 容器尺寸
-  size?: number;
+  minWidth?: number;
+  className?: string;
+  tipContent: React.ReactNode;
 }
 
-const DEFAULT_SIZE = 160;
-
-export default function Upload({ uploadFn, value, onChange, size = DEFAULT_SIZE }: UploadProps) {
+export default function Upload({
+  uploadFn,
+  value,
+  onChange,
+  minWidth,
+  className,
+  tipContent,
+}: UploadProps) {
   const [status, setStatus] = useState<UploadStatus>('idle');
   const [progress, setProgress] = useState(0);
   const [imgUrl, setImgUrl] = useState<string | undefined>(value);
@@ -51,6 +56,47 @@ export default function Upload({ uploadFn, value, onChange, size = DEFAULT_SIZE 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // 校验最小宽度
+    try {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new window.Image();
+
+        img.onload = () => {
+          // 检查图片尺寸
+          if (minWidth && img.width < minWidth) {
+            toast.error(`Image must be at least ${minWidth} width`);
+            return;
+          }
+
+          // 检查宽高比是否为 1:1
+          if (img.width !== img.height) {
+            toast.error('Image must have a 1:1 aspect ratio (square)');
+            return;
+          }
+
+          // 验证通过，上传图片到服务器
+          // uploadImage(file);
+        };
+
+        img.onerror = () => {
+          toast.error('Failed to load image. Please try again.');
+        };
+
+        img.src = reader.result as string;
+      };
+      reader.onerror = () => {
+        toast.error('Failed to read file. Please try again.');
+      };
+
+      reader.readAsDataURL(file);
+    } catch {
+      toast.error('Failed to read image file');
+      e.target.value = '';
+      return;
+    }
+
     setStatus('uploading');
     setProgress(0);
     try {
@@ -87,9 +133,9 @@ export default function Upload({ uploadFn, value, onChange, size = DEFAULT_SIZE 
       className={cn(
         'relative flex flex-col items-center justify-center border border-border rounded-xs cursor-pointer transition-all',
         status === 'uploading' ? 'opacity-80' : '',
-        'group'
+        'group',
+        className
       )}
-      style={{ width: size, height: size }}
       onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -104,9 +150,10 @@ export default function Upload({ uploadFn, value, onChange, size = DEFAULT_SIZE 
       />
       {/* 未上传 */}
       {!imgUrl && status !== 'uploading' && (
-        <div className="flex flex-col items-center justify-center select-none">
-          <Image src="/icons/upload.svg" alt="upload" width={48} height={48} />
+        <div className={cn('flex flex-col items-center justify-center select-none gap-2')}>
+          <NextImage src="/icons/upload.svg" alt="upload" width={48} height={48} />
           <div className="mt-2 text-sm text-[#3D3D3D]">Click To Upload</div>
+          {tipContent}
         </div>
       )}
       {/* 上传中 */}
@@ -122,7 +169,12 @@ export default function Upload({ uploadFn, value, onChange, size = DEFAULT_SIZE 
       {imgUrl && status !== 'uploading' && (
         <div className="w-full h-full relative">
           {/* 图片展示 */}
-          <Image src={imgUrl} alt="uploaded" fill style={{ objectFit: 'cover', borderRadius: 8 }} />
+          <NextImage
+            src={imgUrl}
+            alt="uploaded"
+            fill
+            style={{ objectFit: 'cover', borderRadius: 8 }}
+          />
           {/* hover 浮层 */}
           {hovered && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2 rounded-lg">

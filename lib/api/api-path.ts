@@ -1,0 +1,11 @@
+export const isPreview = process.env.NEXT_PUBLIC_IS_PREVIEW === '1';
+export const isProduction = process.env.NODE_ENV === 'production' && !isPreview;
+
+const ProdHost = 'https://api.detake.com';
+const DevHost = 'https://preview-api.detake.com';
+
+export const ApiHost = isProduction ? ProdHost : DevHost;
+
+export const ApiPath = {
+  tags: `${ApiHost}/api/v1/articles/tags`,
+};

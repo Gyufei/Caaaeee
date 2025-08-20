@@ -1,0 +1,80 @@
+{
+  "SideNav": {
+    "home": "Home",
+    "articles": "Articles",
+    "research": "Research",
+    "about": "About",
+    "contact": "Contact"
+  },
+
+  "Footer": {
+    "newsletter": {
+      "title": "NEWSLETTER",
+      "subtitle": "Stay up to crypto with DeTake",
+      "description": "Get the daily newsletter that helps thousands of investors understand the markets.",
+      "emailPlaceholder": "Email address",
+      "subscribeButton": "SUBSCRIBE"
+    },
+    "disclosure": {
+      "title": "DISCLOSURE & POLICIES",
+      "content": "CoinDesk is an award-winning media outlet that covers the cryptocurrency industry. Its journalists abide by a strict set of editorial policies. CoinDesk has adopted a set of principles aimed at ensuring the integrity, editorial independence and freedom from bias of its publications. CoinDesk is part of the Bullish group, which owns and invests in digital asset businesses and digital assets. CoinDesk employees, including journalists, may receive Bullish group equity-based compensation. Bullish was incubated by technology investor Block.one."
+    },
+    "navigation": {
+      "news": "News",
+      "podcasts": "Podcasts",
+      "newsletters": "Newsletters",
+      "events": "Events",
+      "roundtables": "Roundtables",
+      "analytics": "Analytics",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "manageCookies": "Manage Cookies",
+      "careers": "Careers",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "contactUs": "Contact Us"
+    },
+    "company": {
+      "logo": "LOGO",
+      "copyright": "© DETAKE LLC"
+    },
+    "social": {
+      "twitter": "Follow us on Twitter",
+      "telegram": "Join our Telegram",
+      "github": "Visit our GitHub",
+      "discord": "Join our Discord",
+      "youtube": "Subscribe to our YouTube",
+      "rss": "Subscribe to our RSS feed"
+    }
+  },
+  "Header": {
+    "navigation": {
+      "allCategories": "All Categories",
+      "social": "Social Media",
+      "explore": "Explore",
+      "technology": "Technology",
+      "trending": "Trending",
+      "learn": "Learn",
+      "collections": "Collections",
+      "myCollections": "My Collections",
+      "categories": {
+        "news": "News",
+        "insights": "Insights",
+        "research": "Research"
+      }
+    },
+    "locale": {
+      "northAmerica": "North America",
+      "asia": "Asia",
+      "switchToAsia": "Switch to Asia"
+    },
+    "actions": {
+      "search": "Search",
+      "switchLanguage": "Switch Language",
+      "openMenu": "Open menu"
+    },
+    "dropdown": {
+      "article": "Article"
+    }
+  }
+}

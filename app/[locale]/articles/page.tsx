@@ -5,6 +5,7 @@ import { ChevronDown, Search } from 'lucide-react';
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Edit from '@/components/icons/edit';
 import Share from '@/components/icons/share';
@@ -119,10 +120,15 @@ const mockArticles = [
 ];
 
 export default function Articles() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
+  function handleCreateArticle() {
+    router.push('/articles/create');
+  }
+
   return (
-    <div className="flex-1 px-6 py-5">
+    <div className="flex-1 px-6 py-5 mb-16">
       {/* 顶部搜索栏和操作按钮 */}
       <div className="flex justify-between items-center mb-5">
         {/* 搜索栏 */}
@@ -148,7 +154,10 @@ export default function Articles() {
           </PopoverTrigger>
           <PopoverContent className="w-[140px] p-[10px] rounded-none border border-border">
             <div className="flex flex-col">
-              <button className="px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors">
+              <button
+                onClick={handleCreateArticle}
+                className="px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors"
+              >
                 Article
               </button>
               <button className="px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors">

@@ -1,4 +1,9 @@
-export async function Fetcher<T = unknown>(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<T> {
+import { useAppStore } from './store';
+
+export async function Fetcher<T = unknown>(
+  input: URL | RequestInfo,
+  init?: RequestInit | undefined
+): Promise<T> {
   try {
     const result = await fetch(input, init);
     const res = await parsedRes(result);
@@ -26,6 +31,7 @@ async function parsedRes(res: Response) {
       };
 
       if (res.status === 401) {
+        useAppStore.getState().logout();
         error.message = 'Unauthorized';
       }
 
@@ -43,11 +49,15 @@ async function parsedRes(res: Response) {
 
     const json = await res.json();
 
-    if (json.code === 500) {
-      throw new Error(json.message || 'Internal server error');
+    if (json.code === 401) {
+      throw new Error(json.msg || 'Unauthorized');
     }
 
-    return 'data' in json ? json.data : json;
+    if (json.code === 500) {
+      throw new Error(json.msg || 'Internal server error');
+    }
+
+    return json;
   } catch (e) {
     throw e;
   }

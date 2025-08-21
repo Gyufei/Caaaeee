@@ -8,7 +8,7 @@ import UserIcon from '@/components/icons/user';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { useWalletSign } from '@/lib/api/use-wallet-sign';
-import { useAccessToken } from '@/lib/store';
+import { useAccessToken, useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 
 import Email from './icons/email';
@@ -16,6 +16,9 @@ import Wallet from './icons/wallet';
 import { Button } from './ui/button';
 
 export default function UserMenu() {
+  const showLogin = useAppStore((state) => state.showLogin);
+  const setShowLogin = useAppStore((state) => state.setShowLogin);
+
   const accessToken = useAccessToken();
   const isLogin = !!accessToken;
 
@@ -51,7 +54,7 @@ export default function UserMenu() {
   }, [wallets, accessToken, ready]);
 
   return (
-    <Popover>
+    <Popover open={showLogin} onOpenChange={setShowLogin}>
       <PopoverTrigger asChild>
         <button
           className="p-2 hover:bg-gray-100 rounded-md transition-colors"

@@ -10,6 +10,9 @@ export interface AppActions {
   setUserId: (userId: string) => void;
   setAccessToken: (accessToken: string) => void;
   logout: () => void;
+
+  showLogin: boolean;
+  setShowLogin: (showLogin: boolean) => void;
 }
 
 export type AppStore = AppState & AppActions;
@@ -27,6 +30,9 @@ export const useAppStore = create<AppStore>()(
             userId: '',
             accessToken: '',
           }),
+
+        showLogin: false,
+        setShowLogin: (showLogin: boolean) => set({ showLogin }),
       }),
       {
         name: 'app-store', // localStorage 的 key

@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { Fetcher } from '../fetcher';
-import { useAccessToken } from '../store';
+import { useAccessToken, useAppStore } from '../store';
 import { ApiPath } from './api-path';
 
 export interface SaveContentContact {
@@ -41,11 +41,13 @@ export interface SaveContentResponse {
 
 export function useSaveContent() {
   const token = useAccessToken();
+  const setShowLogin = useAppStore((state) => state.setShowLogin);
 
   return useMutation<SaveContentResponse, Error, SaveContentPayload>({
     mutationKey: ['save-content'],
     mutationFn: async (payload: SaveContentPayload): Promise<SaveContentResponse> => {
       if (!token) {
+        setShowLogin(true);
         throw new Error('Unauthorized');
       }
 

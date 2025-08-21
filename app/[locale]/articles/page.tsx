@@ -12,16 +12,17 @@ import Share from '@/components/icons/share';
 import Stack from '@/components/icons/stack';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { useUserContents } from '@/lib/api/use-user-contents';
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationPrevious,
   PaginationNext,
+  PaginationPrevious,
 } from '@/components/ui/pagination';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+
+import { useUserContents } from '@/lib/api/use-user-contents';
 
 // 使用后端数据
 
@@ -145,14 +146,17 @@ export default function Articles() {
                   </td>
                 </tr>
               )}
-              {!isLoading && !error &&
+              {!isLoading &&
+                !error &&
                 list.map((item, idx) => {
                   const created = new Date(item.created_at);
                   const timeStr = isNaN(created.getTime()) ? '-' : created.toLocaleTimeString();
                   const dateStr = isNaN(created.getTime()) ? '-' : created.toLocaleDateString();
                   return (
                     <tr key={item.entry_id} className="hover:bg-gray-50 border-b last:border-b-0">
-                      <td className="px-4 py-4 text-center text-foreground border-r">{startIndex + idx}</td>
+                      <td className="px-4 py-4 text-center text-foreground border-r">
+                        {startIndex + idx}
+                      </td>
                       <td className="px-4 py-4 border-r">
                         <div className="flex flex-col">
                           <div className="text-sm font-normal text-muted-foreground">
@@ -220,24 +224,26 @@ export default function Articles() {
           </table>
         </div>
       </div>
-      <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={canPrev ? () => setPage((p) => Math.max(1, p - 1)) : undefined}
-              className={!canPrev ? 'pointer-events-none opacity-50' : undefined}
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={canNext ? () => setPage((p) => p + 1) : undefined}
-              className={!canNext ? 'pointer-events-none opacity-50' : undefined}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {list.length > 0 && (
+        <Pagination className="mt-4">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={canPrev ? () => setPage((p) => Math.max(1, p - 1)) : undefined}
+                className={!canPrev ? 'pointer-events-none opacity-50' : undefined}
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={canNext ? () => setPage((p) => p + 1) : undefined}
+                className={!canNext ? 'pointer-events-none opacity-50' : undefined}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }

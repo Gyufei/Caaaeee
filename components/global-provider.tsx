@@ -2,7 +2,7 @@
 
 import { WagmiProvider } from '@privy-io/wagmi';
 
-import { wagmiConfig } from '@/components/config/wagmi-config';
+import { wagmiConfig } from '@/lib/config/wagmi-config';
 import { GlobalQuery } from '@/components/global-query';
 
 import PrivyGlobalProvider from './privy-global';

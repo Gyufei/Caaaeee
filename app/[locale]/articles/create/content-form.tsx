@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { FormStep } from '@/components/common/form-step';
 import { NumberInput } from '@/components/common/number-input';
 import Upload from '@/components/common/upload';
-import { PayTokens } from '@/components/config/tokens';
+import { PayTokens } from '@/lib/config/tokens';
 import { Button } from '@/components/ui/button';
 import {
   Command,

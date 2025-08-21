@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import { cn } from '@/lib/utils';
+import { cn, getAppPath } from '@/lib/utils';
 
 interface HeaderProps {
   userComponent?: React.ReactNode;
@@ -59,29 +59,29 @@ export default function Header({ userComponent }: HeaderProps) {
     left: [
       {
         name: T('navigation.social'),
-        href: `/social`,
+        href: getAppPath(`/social`, locale),
         key: 'social',
       },
       {
         name: T('navigation.explore'),
-        href: `/explore`,
+        href: getAppPath(`/explore`, locale),
         key: 'explore',
       },
       {
         name: T('navigation.technology'),
-        href: `/technology`,
+        href: getAppPath(`/technology`, locale),
         key: 'technology',
       },
     ],
     right: [
       {
         name: T('navigation.trending'),
-        href: `/trending`,
+        href: getAppPath(`/trending`, locale),
         key: 'trending',
       },
       {
         name: T('navigation.learn'),
-        href: `/learn`,
+        href: getAppPath(`/learn`, locale),
         key: 'learn',
       },
     ],
@@ -131,7 +131,7 @@ export default function Header({ userComponent }: HeaderProps) {
   const collectionsItems = [
     {
       name: T('navigation.myCollections'),
-      href: `/collections/my`,
+      href: getAppPath(`/collections/my`, locale),
       key: 'my-collections',
     },
   ];
@@ -140,17 +140,17 @@ export default function Header({ userComponent }: HeaderProps) {
   const categoriesItems = [
     {
       name: T('navigation.categories.news'),
-      href: `/news`,
+      href: getAppPath(`/news`, locale),
       key: 'news',
     },
     {
       name: T('navigation.categories.insights'),
-      href: `/insights`,
+      href: getAppPath(`/insights`, locale),
       key: 'insights',
     },
     {
       name: T('navigation.categories.research'),
-      href: `/research`,
+      href: getAppPath(`/research`, locale),
       key: 'research',
     },
   ];

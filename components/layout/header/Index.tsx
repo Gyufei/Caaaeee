@@ -241,7 +241,7 @@ export default function Header({ userComponent }: HeaderProps) {
             <div className="relative" ref={collectionsDropdownRef}>
               <button
                 onClick={toggleCollectionsDropdown}
-                className={`flex items-center space-x-1 text-sm px-3 py-1.5 transition-colors hover:bg-gray-100 ${collectionsDropdownOpen ? '!bg-primary text-white' : ''}`}
+                className={`flex items-center space-x-1 text-sm px-3 h-12 transition-colors hover:bg-gray-100 ${collectionsDropdownOpen ? '!bg-primary text-white' : ''}`}
                 aria-label={T('navigation.collections')}
                 aria-expanded={collectionsDropdownOpen}
               >
@@ -301,14 +301,14 @@ export default function Header({ userComponent }: HeaderProps) {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleLocaleDropdown}
-                className={`flex items-center space-x-2 px-2 py-1 hover:bg-gray-100 rounded transition-colors ${localeDropdownOpen ? '!bg-primary text-white' : ''}`}
+                className={`flex items-center space-x-2 px-2 h-12 hover:bg-gray-100 rounded transition-colors ${localeDropdownOpen ? '!text-primary' : 'text-foreground'}`}
                 aria-label={T('actions.switchLanguage')}
                 aria-expanded={localeDropdownOpen}
               >
                 <Image
                   src={
                     localeDropdownOpen
-                      ? '/icons/header/country-white.svg'
+                      ? '/icons/header/country-main.svg'
                       : '/icons/header/country.svg'
                   }
                   alt="CountryIcon"
@@ -316,13 +316,13 @@ export default function Header({ userComponent }: HeaderProps) {
                   height={16}
                 />
                 <span
-                  className={cn('text-sm', localeDropdownOpen ? 'text-white' : 'text-foreground')}
+                  className={cn('text-sm', localeDropdownOpen ? 'text-primary' : 'text-foreground')}
                 >
                   {localeConfig[locale as keyof typeof localeConfig].name}
                 </span>
                 <Image
                   src={
-                    localeDropdownOpen ? '/icons/header/down-white.svg' : '/icons/header/down.svg'
+                    localeDropdownOpen ? '/icons/header/down-main.svg' : '/icons/header/down.svg'
                   }
                   alt="dropdown"
                   width={16}

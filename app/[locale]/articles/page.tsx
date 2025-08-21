@@ -43,6 +43,10 @@ export default function Articles() {
     router.push('/articles/create');
   }
 
+  function handleEdit(entryId: string) {
+    router.push(`/articles/create?entry_id=${entryId}`);
+  }
+
   return (
     <div className="flex-1 px-6 py-5 mb-16">
       {/* 顶部搜索栏和操作按钮 */}
@@ -178,7 +182,7 @@ export default function Articles() {
                       <td className="px-4 py-4 border-r text-center">
                         <div className="flex items-center gap-x-1">
                           <div className="flex flex-col">
-                            <div className="flex items-center">
+                            <div className="flex items-center gap-1">
                               <Image src="/icons/usdc.svg" alt="usdc" width={16} height={16} />
                               <div>-</div>
                             </div>
@@ -202,7 +206,11 @@ export default function Articles() {
                       </td>
                       <td className="px-4 py-4 text-center">
                         <div className="flex justify-center items-center space-x-2">
-                          <button className="p-1 hover:bg-gray-100 rounded group" title="编辑">
+                          <button
+                            onClick={() => handleEdit(item.entry_id)}
+                            className="p-1 hover:bg-gray-100 rounded group"
+                            title="编辑"
+                          >
                             <Edit className="w-4 h-4 text-muted-foreground group-hover:text-primary" />
                           </button>
                           <Tooltip>

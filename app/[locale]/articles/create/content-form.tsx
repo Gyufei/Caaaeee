@@ -15,7 +15,6 @@ import Image from 'next/image';
 import { FormStep } from '@/components/common/form-step';
 import { NumberInput } from '@/components/common/number-input';
 import Upload from '@/components/common/upload';
-import { PayTokens } from '@/lib/config/tokens';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -47,6 +46,7 @@ import { Switch } from '@/components/ui/switch';
 import { ContentDetailData } from '@/lib/api/use-content-detail';
 import { useCountryCity } from '@/lib/api/use-country-city';
 import { type SaveContentPayload, useSaveContent } from '@/lib/api/use-save-content';
+import { PayTokens } from '@/lib/config/tokens';
 import { cn } from '@/lib/utils';
 
 import { CateSearchInput } from './cate-search-input';
@@ -97,6 +97,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
   const { connectWallet } = usePrivy();
   const { address } = useAccount();
+
+  const [submitDataStatus, setSubmitDataStatus] = useState<'draft' | 'published'>('draft');
 
   const form = useForm<ArticleFormData>({
     resolver: zodResolver(formSchema),
@@ -198,6 +200,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
   const onSubmitWithStatus = (status: 'draft' | 'published') => async (data: ArticleFormData) => {
     try {
+      setSubmitDataStatus(status);
       const language = locale === 'us' ? 'en' : 'zh';
 
       const formPayload: SaveContentPayload = {
@@ -1060,14 +1063,16 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     disabled={isPending}
                     onClick={form.handleSubmit(onSubmitWithStatus('draft'))}
                   >
-                    {isPending ? 'Saving...' : 'Save & Exit'}
+                    {isPending && submitDataStatus === 'draft' ? 'Saving...' : 'Save & Exit'}
                   </Button>
                   <Button
                     type="submit"
                     className="h-10 px-6 bg-primary text-white hover:bg-primary/90"
                     disabled={isPending}
                   >
-                    {isPending ? 'Publishing...' : 'Direct Publish'}
+                    {isPending && submitDataStatus === 'published'
+                      ? 'Publishing...'
+                      : 'Direct Publish'}
                   </Button>
                 </div>
               </div>

@@ -8,7 +8,7 @@ import CreateArticle from './content-form';
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const entryId = searchParams.get('entryId');
+  const entryId = searchParams.get('entry_id');
 
   const { data: contentDetail } = useContentDetail(entryId ?? undefined);
 

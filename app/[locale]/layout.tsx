@@ -4,9 +4,8 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 
-import { GlobalQuery } from '@/components/global-query';
+import GlobalProvider from '@/components/global-provider';
 import CommonLayout from '@/components/layout/common';
-import PrivyGlobalProvider from '@/components/privy-global';
 
 import { SequelSansFont } from '../fonts';
 import '../globals.css';
@@ -32,11 +31,9 @@ export default async function RootLayout({
     <html lang={locale === 'us' ? 'en' : 'zh'}>
       <body className={`${SequelSansFont.variable} antialiased`}>
         <NextIntlClientProvider>
-          <PrivyGlobalProvider>
-            <GlobalQuery>
-              <CommonLayout>{children}</CommonLayout>
-            </GlobalQuery>
-          </PrivyGlobalProvider>
+          <GlobalProvider>
+            <CommonLayout>{children}</CommonLayout>
+          </GlobalProvider>
         </NextIntlClientProvider>
       </body>
     </html>

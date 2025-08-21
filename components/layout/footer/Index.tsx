@@ -18,7 +18,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder={T('newsletter.emailPlaceholder')}
-                className="flex-1 px-4 py-2 bg-white !text-[#909399] border border-gray-700 rounded-l focus:outline-none focus:border-teal-500"
+                className="flex-1 px-4 py-2 bg-white !text-muted-foreground border border-gray-700 rounded-l focus:outline-none focus:border-teal-500"
               />
               <button className="bg-teal-500 px-6 py-2 rounded-r hover:bg-[#06A17E] flex items-center">
                 {T('newsletter.subscribeButton')}

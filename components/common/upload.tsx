@@ -160,7 +160,7 @@ export default function Upload({
       {status === 'uploading' && (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <div className="w-2/3 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-main transition-all" style={{ width: `${progress}%` }}></div>
+            <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }}></div>
           </div>
           <div className="mt-2 text-xs text-gray-400">Uploading... {progress}%</div>
         </div>
@@ -179,7 +179,7 @@ export default function Upload({
           {hovered && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2 rounded-lg">
               <button
-                className="px-3 py-1 bg-white/90 text-main rounded text-xs font-medium hover:bg-white"
+                className="px-3 py-1 bg-white/90 text-primary rounded text-xs font-medium hover:bg-white"
                 onClick={handleReplace}
               >
                 重新上传

@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 
@@ -18,7 +17,6 @@ export default function Header({ userComponent }: HeaderProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
 
   const T = useTranslations('Header');
 
@@ -105,7 +103,7 @@ export default function Header({ userComponent }: HeaderProps) {
    * Handle locale switching with smooth transition
    */
   const handleLocaleSwitch = (newLocale: string) => {
-    router.replace({ pathname, query: params }, { locale: newLocale });
+    router.replace(pathname, { locale: newLocale });
   };
 
   /**
@@ -167,7 +165,7 @@ export default function Header({ userComponent }: HeaderProps) {
             <div className="" ref={categoriesDropdownRef}>
               <button
                 onClick={toggleCategoriesDropdown}
-                className={`h-12 flex items-center space-x-1 text-sm px-3 py-1.5 text-foreground transition-colors hover:bg-gray-100 ${categoriesDropdownOpen ? '!bg-main text-white' : ''}`}
+                className={`h-12 flex items-center space-x-1 text-sm px-3 py-1.5 text-foreground transition-colors hover:bg-gray-100 ${categoriesDropdownOpen ? '!bg-primary text-white' : ''}`}
                 aria-label={T('navigation.allCategories')}
                 aria-expanded={categoriesDropdownOpen}
               >
@@ -223,7 +221,7 @@ export default function Header({ userComponent }: HeaderProps) {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`text-sm transition-colors hover:text-gray-800 ${pathname === item.href ? 'text-main' : 'text-foreground'}`}
+                className={`text-sm transition-colors hover:text-gray-800 ${pathname === item.href ? 'text-primary' : 'text-foreground'}`}
               >
                 {item.name}
               </Link>
@@ -243,7 +241,7 @@ export default function Header({ userComponent }: HeaderProps) {
             <div className="relative" ref={collectionsDropdownRef}>
               <button
                 onClick={toggleCollectionsDropdown}
-                className={`flex items-center space-x-1 text-sm px-3 py-1.5 transition-colors hover:bg-gray-100 ${collectionsDropdownOpen ? '!bg-main text-white' : ''}`}
+                className={`flex items-center space-x-1 text-sm px-3 py-1.5 transition-colors hover:bg-gray-100 ${collectionsDropdownOpen ? '!bg-primary text-white' : ''}`}
                 aria-label={T('navigation.collections')}
                 aria-expanded={collectionsDropdownOpen}
               >
@@ -285,7 +283,7 @@ export default function Header({ userComponent }: HeaderProps) {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`text-sm transition-colors hover:text-gray-800 ${pathname === item.href ? 'text-main' : 'text-foreground'}`}
+                className={`text-sm transition-colors hover:text-gray-800 ${pathname === item.href ? 'text-primary' : 'text-foreground'}`}
               >
                 {item.name}
               </Link>
@@ -303,7 +301,7 @@ export default function Header({ userComponent }: HeaderProps) {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleLocaleDropdown}
-                className={`flex items-center space-x-2 px-2 py-1 hover:bg-gray-100 rounded transition-colors ${localeDropdownOpen ? '!bg-main text-white' : ''}`}
+                className={`flex items-center space-x-2 px-2 py-1 hover:bg-gray-100 rounded transition-colors ${localeDropdownOpen ? '!bg-primary text-white' : ''}`}
                 aria-label={T('actions.switchLanguage')}
                 aria-expanded={localeDropdownOpen}
               >
@@ -341,7 +339,7 @@ export default function Header({ userComponent }: HeaderProps) {
                       <button
                         key={key}
                         onClick={() => handleLocaleSwitch(key)}
-                        className={`w-full flex items-center space-x-3 px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${locale === key ? 'bg-gray-50 text-main' : 'text-gray-600'}`}
+                        className={`w-full flex items-center space-x-3 px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${locale === key ? 'bg-gray-50 text-primary' : 'text-gray-600'}`}
                       >
                         <span>{config.name}</span>
                         {locale === key && <span className="ml-auto text-xs text-primary">✓</span>}

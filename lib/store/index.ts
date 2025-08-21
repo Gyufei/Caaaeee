@@ -8,6 +8,7 @@ export interface AppState {
 
 export interface AppActions {
   setUserId: (userId: string) => void;
+  setAccessToken: (accessToken: string) => void;
   logout: () => void;
 }
 
@@ -20,6 +21,7 @@ export const useAppStore = create<AppStore>()(
         userId: '',
         accessToken: '',
         setUserId: (userId: string) => set({ userId }),
+        setAccessToken: (accessToken: string) => set({ accessToken }),
         logout: () =>
           set({
             userId: '',
@@ -28,7 +30,7 @@ export const useAppStore = create<AppStore>()(
       }),
       {
         name: 'app-store', // localStorage 的 key
-        partialize: (state) => ({
+        partialize: (state: AppStore) => ({
           userId: state.userId,
           accessToken: state.accessToken,
         }),

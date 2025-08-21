@@ -4,54 +4,47 @@ import { useMemo, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 
-import { type Tag, useArticlesTags } from '@/lib/api/use-articles-tags';
+import { type Category, useArticlesCates } from '@/lib/api/use-articles-cates';
 
-type TagInputProps = {
-  values: string[];
-  onChange: (vals: string[]) => void;
+type CateInputProps = {
+  value: string;
+  onChange: (val: string) => void;
   placeholder?: string;
 };
 
-export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: TagInputProps) {
+export function CateSearchInput({ value, onChange, placeholder = 'Search...' }: CateInputProps) {
   const [inputValue, setInputValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  const { data, isLoading } = useArticlesTags();
+  const { data, isLoading } = useArticlesCates();
 
   const suggestions = useMemo(() => {
-    const allTags: Tag[] = data?.data ?? [];
+    const allCates: Category[] = data?.data ?? [];
     const keyword = inputValue.trim().toLowerCase();
-    
+
     if (keyword) {
-      // 当有搜索关键词时，显示匹配的选项 + 已选中的选项
-      const matchedTags = allTags.filter((t) => t.name.toLowerCase().includes(keyword));
-      const selectedTags = allTags.filter((t) => values.includes(t.name));
-      
-      // 合并匹配的标签和已选中的标签，去重
-      const combined = [...matchedTags];
-      selectedTags.forEach(tag => {
-        if (!combined.find(t => t.id === tag.id)) {
-          combined.push(tag);
+      const matched = allCates.filter((c) => c.name.toLowerCase().includes(keyword));
+      const selected = allCates.filter((c) => value === c.name);
+
+      const combined = [...matched];
+      selected.forEach((cate) => {
+        if (!combined.find((c) => c.id === cate.id)) {
+          combined.push(cate);
         }
       });
-      
+
       return combined;
     } else {
-      // 没有搜索关键词时，显示所有选项
-      return allTags;
+      return allCates;
     }
-  }, [data?.data, inputValue, values]);
+  }, [data?.data, inputValue, value]);
 
-  // 当输入框获得焦点时显示选项
   const showSuggestions = isFocused;
 
-  function handleSelect(tagName: string) {
-    // 点击切换选中/取消选中
-    if (values.includes(tagName)) {
-      onChange(values.filter((v) => v !== tagName));
-    } else {
-      onChange([...values, tagName]);
-    }
+  function handleSelect(cateName: string) {
+    onChange(cateName);
+    setInputValue('');
+    setIsFocused(false);
   }
 
   function handleInputFocus() {
@@ -81,10 +74,9 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
         aria-autocomplete="list"
       />
 
-      {/* 绝对定位的弹出框 */}
       {showSuggestions && (
         <div className="absolute top-full left-0 right-0 z-50 bg-popover text-popover-foreground border shadow-md mt-1">
-          <div id="tag-suggestions" role="listbox" className="max-h-64 overflow-auto">
+          <div id="cate-suggestions" role="listbox" className="max-h-64 overflow-auto">
             {isLoading && <div className="px-3 py-2 text-sm text-muted-foreground">Loading...</div>}
             {!isLoading && suggestions.length === 0 && (
               <div className="px-3 py-2 text-sm text-muted-foreground">
@@ -93,17 +85,17 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
             )}
             {!isLoading && suggestions.length > 0 && (
               <ul className="py-1">
-                {suggestions.map((t) => {
-                  const isSelected = values.includes(t.name);
+                {suggestions.map((c) => {
+                  const isSelected = value === c.name;
                   return (
-                    <li key={t.id}>
+                    <li key={c.id}>
                       <button
                         type="button"
                         className={`w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground ${isSelected ? '' : ''}`}
-                        onClick={() => handleSelect(t.name)}
+                        onClick={() => handleSelect(c.name)}
                       >
                         <div className="flex items-center justify-between">
-                          <span>{t.name}</span>
+                          <span>{c.name}</span>
                           {isSelected && <Check className="w-4 h-4 text-[#06A17E]" />}
                         </div>
                       </button>
@@ -112,20 +104,11 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
                 })}
               </ul>
             )}
-            {/* {inputValue.trim() && !values.includes(inputValue.trim()) && (
-              <div className="border-t">
-                <button
-                  type="button"
-                  className="w-full text-left px-3 py-2 text-sm text-[#06A17E] hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => handleSelect(inputValue.trim())}
-                >
-                  Create &quot;{inputValue.trim()}&quot;
-                </button>
-              </div>
-            )} */}
           </div>
         </div>
       )}
     </div>
   );
 }
+
+

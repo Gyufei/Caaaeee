@@ -23,9 +23,9 @@ export const FormStep: React.FC<FormStepProps> = ({ steps, currentStep, classNam
               <div
                 className={cn(
                   'w-5 h-5 rounded-full flex items-center justify-center text-sm font-medium',
-                  index < currentStep && 'bg-main text-white',
+                  index < currentStep && 'bg-primary text-white',
                   index === currentStep && 'bg-foreground text-white',
-                  index > currentStep && 'bg-[#F5F6F7] text-[#909399]'
+                  index > currentStep && 'bg-[#F5F6F7] text-muted-foreground'
                 )}
               >
                 {index < currentStep ? <Check className="w-3 h-3 text-white" /> : <>{index + 1}</>}
@@ -33,9 +33,9 @@ export const FormStep: React.FC<FormStepProps> = ({ steps, currentStep, classNam
               <span
                 className={cn(
                   'text-sm font-medium whitespace-nowrap',
-                  index < currentStep && 'text-main',
+                  index < currentStep && 'text-primary',
                   index === currentStep && 'text-foreground',
-                  index > currentStep && 'text-[#909399]'
+                  index > currentStep && 'text-muted-foreground'
                 )}
               >
                 {step}

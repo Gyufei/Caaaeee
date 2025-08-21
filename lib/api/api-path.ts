@@ -8,4 +8,8 @@ export const ApiHost = isProduction ? ProdHost : DevHost;
 
 export const ApiPath = {
   tags: `${ApiHost}/api/v1/articles/tags`,
+  categories: `${ApiHost}/api/v1/articles/categories`,
+  contents: `${ApiHost}/api/v1/contents`,
+  contentDetail: `${ApiHost}/api/v1/contents/detail`,
+  saveContent: `${ApiHost}/api/v1/contents/save`,
 };

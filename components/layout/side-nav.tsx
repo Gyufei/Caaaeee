@@ -89,7 +89,7 @@ function NavItem({
       onClick={handleClick}
       className={cn(
         'flex cursor-pointer gap-3 items-center h-11 px-3 rounded-xs',
-        isActive ? 'text-main bg-[#F5F6F7]' : 'text-[#909399] bg-transparent'
+        isActive ? 'text-primary bg-[#F5F6F7]' : 'text-muted-foreground bg-transparent'
       )}
     >
       <Image src={isActive ? activeIcon : icon} alt={label} width={20} height={20} />
@@ -129,7 +129,7 @@ function ContentNavItem() {
         onClick={handleClick}
         className={cn(
           'flex cursor-pointer items-center justify-between h-11 px-3 rounded-xs',
-          isContent ? 'text-main bg-[#F5F6F7]' : 'text-[#909399] bg-transparent'
+          isContent ? 'text-primary bg-[#F5F6F7]' : 'text-muted-foreground bg-transparent'
         )}
       >
         <div className="flex gap-3 items-center">
@@ -159,11 +159,11 @@ function ContentNavItem() {
             onClick={() => handleSubClick(ARTICLES_PATH)}
             className={cn(
               'text-xs relative cursor-pointer flex items-center font-normal h-9 pl-3',
-              isArticles ? 'text-main bg-[#F5F6F7]' : 'text-[#909399] bg-transparent'
+              isArticles ? 'text-primary bg-[#F5F6F7]' : 'text-muted-foreground bg-transparent'
             )}
           >
             {isArticles && (
-              <div className="absolute -left-[12px] top-[6px] w-[1px] h-6 bg-main"></div>
+              <div className="absolute -left-[12px] top-[6px] w-[1px] h-6 bg-primary"></div>
             )}
             <span>Articles</span>
           </div>
@@ -171,11 +171,11 @@ function ContentNavItem() {
             onClick={() => handleSubClick(TWEETS_PATH)}
             className={cn(
               'text-xs relative cursor-pointer flex items-center font-normal h-9 pl-3',
-              isTweets ? 'text-main bg-[#F5F6F7]' : 'text-[#909399] bg-transparent'
+              isTweets ? 'text-primary bg-[#F5F6F7]' : 'text-muted-foreground bg-transparent'
             )}
           >
             {isTweets && (
-              <div className="absolute -left-[12px] top-[6px] w-[1px] h-6 bg-main"></div>
+              <div className="absolute -left-[12px] top-[6px] w-[1px] h-6 bg-primary"></div>
             )}
             <span>Tweets</span>
           </div>

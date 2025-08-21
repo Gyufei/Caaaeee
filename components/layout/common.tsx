@@ -1,3 +1,5 @@
+import { Toaster } from 'sonner';
+
 import Footer from './footer/Index';
 import Header from './header/Index';
 import SideNav from './side-nav';
@@ -13,6 +15,7 @@ export default function CommonLayout({ children }: { children: React.ReactNode }
       </div>
       {/* <div className="h-[447px] bg-[#031712]">Footer</div> */}
       <Footer />
+      <Toaster />
     </div>
   );
 }

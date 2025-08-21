@@ -12,4 +12,5 @@ export const ApiPath = {
   contents: `${ApiHost}/api/v1/contents`,
   contentDetail: `${ApiHost}/api/v1/contents/detail`,
   saveContent: `${ApiHost}/api/v1/contents/save`,
+  walletSign: `${ApiHost}/api/v1/auth/wallet`,
 };

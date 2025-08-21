@@ -1,9 +1,10 @@
 'use client';
 
+import { usePathname, useRouter } from '@/i18n/navigation';
+
 import { useEffect, useMemo, useState } from 'react';
 
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 

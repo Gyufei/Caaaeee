@@ -1,7 +1,6 @@
 'use client';
 
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { useAccount } from 'wagmi';
 
 import React, { useEffect } from 'react';
 

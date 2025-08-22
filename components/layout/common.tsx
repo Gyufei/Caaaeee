@@ -16,7 +16,7 @@ export default function CommonLayout({ children }: { children: React.ReactNode }
       </div>
       {/* <div className="h-[447px] bg-[#031712]">Footer</div> */}
       <Footer />
-      <Toaster />
+      <Toaster richColors />
     </div>
   );
 }

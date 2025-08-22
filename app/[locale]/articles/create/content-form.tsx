@@ -246,6 +246,19 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
     connectWallet();
   };
 
+  function checkImage(image: HTMLImageElement) {
+    if (image.width < 1024) {
+      toast.error('Image must be at least 1024px width');
+      return false;
+    }
+
+    if (image.width !== image.height) {
+      toast.error('Image must have a 1:1 aspect ratio (square)');
+      return false;
+    }
+    return true;
+  }
+
   return (
     <div className="flex-1 flex-col">
       <div className="flex items-center justify-between px-6 h-14 border-b border-border">
@@ -677,7 +690,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             <Upload
                               value={field.value}
                               onChange={field.onChange}
-                              minWidth={1024}
+                              checkFunc={checkImage}
                               className="border border-dashed p-6 w-[640px]"
                               tipContent={
                                 <div className="text-xs text-center text-muted-foreground">

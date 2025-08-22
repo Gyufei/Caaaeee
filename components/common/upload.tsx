@@ -15,12 +15,12 @@ type UploadStatus = 'idle' | 'uploading' | 'done' | 'error';
 interface UploadProps {
   value?: string;
   onChange?: (url?: string) => void;
-  minWidth?: number;
   className?: string;
   tipContent: React.ReactNode;
+  checkFunc?: (image: HTMLImageElement) => boolean;
 }
 
-export default function Upload({ value, onChange, minWidth, className, tipContent }: UploadProps) {
+export default function Upload({ value, onChange, className, checkFunc, tipContent }: UploadProps) {
   const [status, setStatus] = useState<UploadStatus>('idle');
   const [progress, setProgress] = useState(0);
   const [imgUrl, setImgUrl] = useState<string | undefined>(value);
@@ -46,9 +46,13 @@ export default function Upload({ value, onChange, minWidth, className, tipConten
         const img = new window.Image();
 
         img.onload = () => {
-          // 检查图片尺寸
-          if (minWidth && img.width < minWidth) {
-            toast.error(`Image must be at least ${minWidth}px width`);
+          const allow = checkFunc?.(img) ?? true;
+          if (!allow) {
+            setImgUrl(undefined);
+            setStatus('idle');
+            setProgress(0);
+            onChange?.(undefined);
+            e.target.value = '';
             return;
           }
 

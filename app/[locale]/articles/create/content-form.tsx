@@ -456,7 +456,14 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                               />
                             </FormControl>
                           </div>
-                          <Button variant="outline" className="flex items-center gap-2 h-12">
+                          <Button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                            }}
+                            variant="outline"
+                            className="flex items-center gap-2 h-12"
+                          >
                             <Image src="/icons/twitter.svg" alt="twitter" width={20} height={20} />
                             Connect
                           </Button>

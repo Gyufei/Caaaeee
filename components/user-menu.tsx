@@ -8,9 +8,8 @@ import { useSearchParams } from 'next/navigation';
 import UserIcon from '@/components/icons/user';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-import { APP_PATH } from '@/lib/config/const';
 import { useAccessToken, useAppStore } from '@/lib/store';
-import { cn } from '@/lib/utils';
+import { cn, getAppPath } from '@/lib/utils';
 
 import Wallet from './icons/wallet';
 import { Button } from './ui/button';
@@ -50,12 +49,12 @@ export default function UserMenu() {
   }, [t]);
 
   function goApp() {
-    window.location.href = `${APP_PATH}/${locale}`;
+    window.location.href = getAppPath('', locale);
   }
 
   function handleLogout() {
     logout();
-    window.location.href = `${APP_PATH}/${locale}?ac=q`;
+    window.location.href = getAppPath('?ac=q', locale);
   }
 
   function removeUrlParam(param: string) {

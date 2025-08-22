@@ -281,7 +281,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
       <div className="flex-col">
         <div className="py-8 px-6">
           <div className="text-foreground leading-[140%] text-5xl">
-            {initFormData?.entry_id ? t('CreateArticle') : t('EditArticle')}
+            {initFormData?.entry_id ? t('EditArticle') : t('CreateArticle')}
           </div>
           {initFormData?.entry_id && (
             <div className="mt-[10px] text-xl leading-[140%] text-muted-foreground">

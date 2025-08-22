@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import Edit from '@/components/icons/edit';
-import Share from '@/components/icons/share';
 import Stack from '@/components/icons/stack';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -180,7 +179,8 @@ export default function Articles() {
                       <td className="px-4 py-4 border-r text-center">{item.unique_vistor}</td>
                       <td className="px-4 py-4 border-r text-center">{item.page_view}</td>
                       <td className="px-4 py-4 border-r text-center">
-                        <div className="flex items-center gap-x-1">
+                        <div>-</div>
+                        {/* <div className="flex items-center gap-x-1">
                           <div className="flex flex-col">
                             <div className="flex items-center gap-1">
                               <Image src="/icons/usdc.svg" alt="usdc" width={16} height={16} />
@@ -189,11 +189,10 @@ export default function Articles() {
                             <div>-</div>
                           </div>
                           <Share className="w-4 h-4 text-muted-foreground" />
-                        </div>
+                        </div> */}
                       </td>
                       <td className="px-4 py-4 border-r text-center">
                         <div className="text-sm text-gray-900">
-                          <div>-</div>
                           <div>-</div>
                         </div>
                       </td>
@@ -219,9 +218,7 @@ export default function Articles() {
                                 <Stack className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                               </button>
                             </TooltipTrigger>
-                            <TooltipContent className="w-40 text-center">
-                              Text Text Text Text Text Text Text
-                            </TooltipContent>
+                            <TooltipContent className="w-40 text-center bg-foreground text-white"></TooltipContent>
                           </Tooltip>
                         </div>
                       </td>

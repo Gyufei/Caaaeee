@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { useAccount } from 'wagmi';
 import { z } from 'zod';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLocale, useTranslations } from 'next-intl';
@@ -167,6 +167,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
   function handleBack() {
     router.back();
   }
+
+  const cityData = useMemo(() => {
+    const country = form.getValues('country');
+    if (!countryCityData || !country) return [];
+
+    const cityData = countryCityData?.[country] || [];
+    const c = [...new Set(cityData)];
+    return c;
+  }, [form.watch('country'), countryCityData]);
 
   const validateStep = async (step: number): Promise<boolean> => {
     if (step === 0) {
@@ -416,30 +425,26 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 <CommandList>
                                   <CommandEmpty>{t('states.noData')}</CommandEmpty>
                                   <CommandGroup>
-                                    {countryCityData &&
-                                      form.watch('country') &&
-                                      (countryCityData[form.watch('country')] ?? []).map(
-                                        (city, index) => (
-                                          <CommandItem
-                                            key={index + city}
-                                            value={city}
-                                            onSelect={(currentValue) => {
-                                              const next =
-                                                currentValue === field.value ? '' : currentValue;
-                                              field.onChange(next);
-                                              setCityOpen(false);
-                                            }}
-                                          >
-                                            {city}
-                                            <Check
-                                              className={cn(
-                                                'ml-auto',
-                                                field.value === city ? 'opacity-100' : 'opacity-0'
-                                              )}
-                                            />
-                                          </CommandItem>
-                                        )
-                                      )}
+                                    {cityData.map((city) => (
+                                      <CommandItem
+                                        key={city}
+                                        value={city}
+                                        onSelect={(currentValue) => {
+                                          const next =
+                                            currentValue === field.value ? '' : currentValue;
+                                          field.onChange(next);
+                                          setCityOpen(false);
+                                        }}
+                                      >
+                                        {city}
+                                        <Check
+                                          className={cn(
+                                            'ml-auto',
+                                            field.value === city ? 'opacity-100' : 'opacity-0'
+                                          )}
+                                        />
+                                      </CommandItem>
+                                    ))}
                                   </CommandGroup>
                                 </CommandList>
                               </Command>
@@ -1160,7 +1165,10 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   <Button
                     type="button"
                     variant="outline"
-                    className="h-10 px-6 border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90"
+                    className={cn(
+                      'h-10 px-6 border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90',
+                      currentStep > 0 ? 'block' : 'hidden'
+                    )}
                     disabled={isPending}
                     onClick={form.handleSubmit(onSubmitWithStatus('draft'))}
                   >

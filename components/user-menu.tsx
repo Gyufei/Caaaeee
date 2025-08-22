@@ -76,7 +76,7 @@ export default function UserMenu() {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[180px] px-2 py-2">
         {/* Buttons */}
-        <div className="mt-4 flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <Button
             onClick={handleLogout}
             className="w-full bg-primary hover:bg-primary/90 text-white h-10 px-4 rounded-xs transition-colors flex items-center justify-center space-x-2"

@@ -76,5 +76,141 @@
     "dropdown": {
       "article": "Article"
     }
+  },
+  "ArticleForm": {
+    "navigation": {
+      "back": "Back",
+      "steps": {
+        "basicFields": "Basic Fields",
+        "contentBody": "Content Body", 
+        "promotion": "Promotion"
+      }
+    },
+    "title": "Create Article",
+    "entryId": "Entry ID:",
+    "sections": {
+      "location": "Location",
+      "socialMedia": "Social Media",
+      "relatedAsset": "Related Asset Info",
+      "contact": "Contact",
+      "featuredImage": "Featured Image",
+      "articleContent": "Article Content",
+      "campaignBudget": "Campaign Budget Settings",
+      "subtotal": "Subtotal",
+      "payment": "Payment"
+    },
+    "fields": {
+      "country": "Country / State",
+      "city": "City",
+      "twitterUsername": "Twitter Username",
+      "articleTitle": "Article Title",
+      "subTitle": "Sub Title",
+      "tag": "Tag",
+      "category": "Category",
+      "include": "Include",
+      "fullName": "Full Name",
+      "title": "Title",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "totalCampaignBudget": "Total campaign budget",
+      "campaignBudgetOptimization": "Campaign budget optimization",
+      "dailyCampaignBudget": "Daily campaign budget (optional)"
+    },
+    "placeholders": {
+      "country": "Country",
+      "city": "City",
+      "twitterUsername": "| yourid",
+      "title": "Title",
+      "fullName": "Full Name",
+      "company": "Company Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "articleTitle": "Title",
+      "contentBody": "Type in the best bress release ever createa",
+      "assetValue": {
+        "tokenSymbol": "Enter Token Symbol",
+        "cryptoTicker": "Enter Crypto Ticker",
+        "contractAddress": "Enter Contract Address"
+      },
+      "totalBudget": "None",
+      "dailyBudget": "150.00"
+    },
+    "options": {
+      "assetTypes": {
+        "tokenSymbol": "Token Symbol",
+        "cryptoTicker": "Crypto Ticker",
+        "contractAddress": "Contract Address"
+      },
+      "platforms": {
+        "none": "None",
+        "uniswap": "Uniswap",
+        "pancakeswap": "PancakeSwap",
+        "sushiswap": "SushiSwap",
+        "selectPlatform": "Select Platform"
+      },
+      "relatedPlatform": "Related Platform"
+    },
+    "buttons": {
+      "connect": "Connect",
+      "connectWallet": "Connect Wallet",
+      "prevStep": "Prev Step",
+      "nextStep": "Next Step",
+      "saveExit": "Save & Exit",
+      "directPublish": "Direct Publish",
+      "saving": "Saving...",
+      "publishing": "Publishing...",
+      "payAmount": "Pay 100 SOL",
+      "withdraw": "Withdraw",
+      "promoteInCampaigns": "Campaigns"
+    },
+    "descriptions": {
+      "socialMedia": "Add handle and hashtags to include in our socialmedia post for your press release.",
+      "twitterPrefix": "https://x.com/",
+      "articleContent": "Featured image & Title & Contacts - Will Be Added Automatically",
+      "imageRequirements": {
+        "minWidth": "Minimal width: 1024px",
+        "recommended": "Recommended size: 1200x720px",
+        "ratio": "Please use 15:9 ratio to avoid cropping"
+      },
+      "promoteIt": "Promote it later in",
+      "connected": "Connected:"
+    },
+    "states": {
+      "loading": "Loading...",
+      "none": "None",
+      "noData": "No data",
+      "on": "On",
+      "off": "Off"
+    },
+    "search": {
+      "searchCountry": "Search country...",
+      "searchCity": "Search city...",
+      "selectCountryFirst": "Please select a country first"
+    },
+    "costs": {
+      "promotionBudget": "Promotion Budget",
+      "researchAuditingFee": "Research Auditing Fee",
+      "promotionAmount": "$20",
+      "auditingAmount": "$5",
+      "totalAmount": "$200"
+    },
+    "messages": {
+      "fillRequiredFields": "Please fill in all required fields",
+      "submitFailed": "Submit failed",
+      "imageWidthError": "Image must be at least 1024px width",
+      "imageRatioError": "Image must have a 1:1 aspect ratio (square)"
+    },
+    "validation": {
+      "selectCountry": "Please select a country/state",
+      "selectCity": "Please select a city",
+      "enterTwitterUsername": "Please enter your Twitter username",
+      "enterFullName": "Please enter your full name",
+      "enterValidEmail": "Please enter a valid email address",
+      "enterArticleTitle": "Please enter article title"
+    },
+    "separators": {
+      "or": "Or"
+    }
   }
 }

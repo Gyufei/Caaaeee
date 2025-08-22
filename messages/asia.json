@@ -75,5 +75,141 @@
     "dropdown": {
       "article": "文章"
     }
+  },
+  "ArticleForm": {
+    "navigation": {
+      "back": "返回",
+      "steps": {
+        "basicFields": "基本字段",
+        "contentBody": "内容正文", 
+        "promotion": "推广"
+      }
+    },
+    "title": "创建文章",
+    "entryId": "条目ID：",
+    "sections": {
+      "location": "位置",
+      "socialMedia": "社交媒体",
+      "relatedAsset": "相关资产信息",
+      "contact": "联系方式",
+      "featuredImage": "特色图片",
+      "articleContent": "文章内容",
+      "campaignBudget": "推广预算设置",
+      "subtotal": "小计",
+      "payment": "支付"
+    },
+    "fields": {
+      "country": "国家/州",
+      "city": "城市",
+      "twitterUsername": "Twitter 用户名",
+      "articleTitle": "文章标题",
+      "subTitle": "副标题",
+      "tag": "标签",
+      "category": "类别",
+      "include": "包含",
+      "fullName": "全名",
+      "title": "职位",
+      "company": "公司",
+      "email": "邮箱",
+      "phone": "电话",
+      "totalCampaignBudget": "总推广预算",
+      "campaignBudgetOptimization": "推广预算优化",
+      "dailyCampaignBudget": "每日推广预算（可选）"
+    },
+    "placeholders": {
+      "country": "国家",
+      "city": "城市",
+      "twitterUsername": "| 您的ID",
+      "title": "职位",
+      "fullName": "全名",
+      "company": "公司名称",
+      "email": "邮箱",
+      "phone": "电话号码",
+      "articleTitle": "标题",
+      "contentBody": "输入最佳新闻稿内容",
+      "assetValue": {
+        "tokenSymbol": "输入代币符号",
+        "cryptoTicker": "输入加密货币代码",
+        "contractAddress": "输入合约地址"
+      },
+      "totalBudget": "无",
+      "dailyBudget": "150.00"
+    },
+    "options": {
+      "assetTypes": {
+        "tokenSymbol": "代币符号",
+        "cryptoTicker": "加密货币代码",
+        "contractAddress": "合约地址"
+      },
+      "platforms": {
+        "none": "无",
+        "uniswap": "Uniswap",
+        "pancakeswap": "PancakeSwap",
+        "sushiswap": "SushiSwap",
+        "selectPlatform": "选择平台"
+      },
+      "relatedPlatform": "相关平台"
+    },
+    "buttons": {
+      "connect": "连接",
+      "connectWallet": "连接钱包",
+      "prevStep": "上一步",
+      "nextStep": "下一步",
+      "saveExit": "保存并退出",
+      "directPublish": "直接发布",
+      "saving": "保存中...",
+      "publishing": "发布中...",
+      "payAmount": "支付 100 SOL",
+      "withdraw": "提取",
+      "promoteInCampaigns": "推广活动"
+    },
+    "descriptions": {
+      "socialMedia": "添加用户名和标签，以包含在我们为您的新闻稿发布的社交媒体帖子中。",
+      "twitterPrefix": "https://x.com/",
+      "articleContent": "特色图片、标题和联系方式 - 将自动添加",
+      "imageRequirements": {
+        "minWidth": "最小宽度：1024px",
+        "recommended": "推荐尺寸：1200x720px",
+        "ratio": "请使用 15:9 比例以避免裁剪"
+      },
+      "promoteIt": "稍后在",
+      "connected": "已连接："
+    },
+    "states": {
+      "loading": "加载中...",
+      "none": "无",
+      "noData": "无数据",
+      "on": "开启",
+      "off": "关闭"
+    },
+    "search": {
+      "searchCountry": "搜索国家...",
+      "searchCity": "搜索城市...",
+      "selectCountryFirst": "请先选择一个国家"
+    },
+    "costs": {
+      "promotionBudget": "推广预算",
+      "researchAuditingFee": "研究审计费",
+      "promotionAmount": "$20",
+      "auditingAmount": "$5",
+      "totalAmount": "$200"
+    },
+    "messages": {
+      "fillRequiredFields": "请填写所有必填字段",
+      "submitFailed": "提交失败",
+      "imageWidthError": "图片宽度必须至少为 1024px",
+      "imageRatioError": "图片必须是 1:1 宽高比（正方形）"
+    },
+    "validation": {
+      "selectCountry": "请选择国家/州",
+      "selectCity": "请选择城市",
+      "enterTwitterUsername": "请输入您的 Twitter 用户名",
+      "enterFullName": "请输入您的全名",
+      "enterValidEmail": "请输入有效的邮箱地址",
+      "enterArticleTitle": "请输入文章标题"
+    },
+    "separators": {
+      "or": "或"
+    }
   }
 }

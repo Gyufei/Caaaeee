@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { FormStep } from '@/components/common/form-step';
@@ -52,45 +52,48 @@ import { cn } from '@/lib/utils';
 import { CateSearchInput } from './cate-search-input';
 import { TagSearchInput } from './tag-search-input';
 
-// 定义表单验证模式
-const formSchema = z.object({
-  // step 0
-  country: z.string().min(1, 'Please select a country/state'),
-  city: z.string().min(1, 'Please select a city'),
-  twitterUsername: z.string().min(1, 'Please enter your Twitter username'),
-  assetType: z.enum(['token-symbol', 'crypto-ticker', 'contract-address']),
-  assetValue: z.string().optional(),
-  relatedPlatform: z.enum(['none', 'uniswap', 'pancakeswap', 'sushiswap']),
-  fullName: z.string().min(1, 'Please enter your full name'),
-  title: z.string().optional(),
-  company: z.string().optional(),
-  email: z.email('Please enter a valid email address').optional().or(z.literal('')),
-  phone: z.string().optional(),
+// 定义表单验证模式 - 创建函数以支持动态翻译
+const createFormSchema = (t: any) =>
+  z.object({
+    // step 0
+    country: z.string().min(1, t('validation.selectCountry')),
+    city: z.string().min(1, t('validation.selectCity')),
+    twitterUsername: z.string().min(1, t('validation.enterTwitterUsername')),
+    assetType: z.enum(['token-symbol', 'crypto-ticker', 'contract-address']),
+    assetValue: z.string().optional(),
+    relatedPlatform: z.enum(['none', 'uniswap', 'pancakeswap', 'sushiswap']),
+    fullName: z.string().min(1, t('validation.enterFullName')),
+    title: z.string().optional(),
+    company: z.string().optional(),
+    email: z.email(t('validation.enterValidEmail')).optional().or(z.literal('')),
+    phone: z.string().optional(),
 
-  // step 1
-  articleTitle: z.string().min(1, 'Please enter article title'),
-  featuredImage: z.string().optional(),
-  contentBody: z.string().optional(),
-  subTitle: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  category: z.string().optional(),
+    // step 1
+    articleTitle: z.string().min(1, t('validation.enterArticleTitle')),
+    featuredImage: z.string().optional(),
+    contentBody: z.string().optional(),
+    subTitle: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    category: z.string().optional(),
 
-  // step 2
-  totalCampaignBudget: z.string().optional(),
-  totalCampaignBudgetCurrency: z.string(),
-  campaignBudgetOptimization: z.boolean(),
-  dailyCampaignBudget: z.string().optional(),
-  dailyCampaignBudgetCurrency: z.string(),
-});
-
-type ArticleFormData = z.infer<typeof formSchema>;
+    // step 2
+    totalCampaignBudget: z.string().optional(),
+    totalCampaignBudgetCurrency: z.string(),
+    campaignBudgetOptimization: z.boolean(),
+    dailyCampaignBudget: z.string().optional(),
+    dailyCampaignBudgetCurrency: z.string(),
+  });
 
 export default function CreateArticle({ initFormData }: { initFormData?: ContentDetailData }) {
   const locale = useLocale();
   const router = useRouter();
+  const t = useTranslations('ArticleForm');
   const [currentStep, setCurrentStep] = useState(0);
   const { data: countryCityData, isLoading: isCountryCityLoading } = useCountryCity();
   const { mutateAsync: saveContent, isPending } = useSaveContent();
+
+  const formSchema = createFormSchema(t);
+  type ArticleFormData = z.infer<typeof formSchema>;
 
   const [countryOpen, setCountryOpen] = useState(false);
   const [cityOpen, setCityOpen] = useState(false);
@@ -168,7 +171,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
     if (step === 0) {
       const result = await form.trigger(['country', 'city', 'twitterUsername', 'fullName']);
       if (!result) {
-        toast.error('Please fill in all required fields');
+        toast.error(t('messages.fillRequiredFields'));
       }
       return result;
     }
@@ -176,7 +179,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
     if (step === 1) {
       const result = await form.trigger(['articleTitle']);
       if (!result) {
-        toast.error('Please fill in all required fields');
+        toast.error(t('messages.fillRequiredFields'));
       }
       return result;
     }
@@ -252,10 +255,6 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
       return false;
     }
 
-    if (image.width !== image.height) {
-      toast.error('Image must have a 1:1 aspect ratio (square)');
-      return false;
-    }
     return true;
   }
 

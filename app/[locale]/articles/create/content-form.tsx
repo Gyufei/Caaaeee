@@ -12,9 +12,11 @@ import { useForm } from 'react-hook-form';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
+import RichEditor from '@/components/common/editor';
 import { FormStep } from '@/components/common/form-step';
 import { NumberInput } from '@/components/common/number-input';
 import Upload from '@/components/common/upload';
+// import { PlateEditor } from '@/components/editor/plate-editor';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -88,7 +90,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations('ArticleForm');
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const { data: countryCityData, isLoading: isCountryCityLoading } = useCountryCity();
   const { mutateAsync: saveContent, isPending } = useSaveContent();
 
@@ -278,7 +280,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
       </div>
       <div className="flex-col">
         <div className="py-8 px-6">
-          <div className="text-foreground leading-[140%] text-5xl">{t('title')}</div>
+          <div className="text-foreground leading-[140%] text-5xl">
+            {initFormData?.entry_id ? t('CreateArticle') : t('EditArticle')}
+          </div>
           {initFormData?.entry_id && (
             <div className="mt-[10px] text-xl leading-[140%] text-muted-foreground">
               {t('entryId')} {initFormData.entry_id}
@@ -782,11 +786,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     render={({ field }) => (
                       <FormItem className="flex flex-col gap-2">
                         <FormControl>
-                          <textarea
+                          {/* <PlateEditor value={field.value ?? '[]'} onChange={field.onChange} /> */}
+                          <div className="w-[640px] border border-border rounded-xs">
+                            <RichEditor value={field.value ?? '[]'} onChange={field.onChange} />
+                          </div>
+                          {/* <textarea
                             placeholder={t('placeholders.contentBody')}
                             className="w-[640px] h-[320px] border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none hover:border-[#575657] focus-visible:border-[#06A17E] focus-visible:text-foreground"
                             {...field}
-                          />
+                          /> */}
                         </FormControl>
                         <FormMessage />
                       </FormItem>

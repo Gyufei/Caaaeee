@@ -82,11 +82,12 @@
       "back": "Back",
       "steps": {
         "basicFields": "Basic Fields",
-        "contentBody": "Content Body", 
+        "contentBody": "Content Body",
         "promotion": "Promotion"
       }
     },
-    "title": "Create Article",
+    "CreateArticle": "Create Article",
+    "EditArticle": "Edit Article",
     "entryId": "Entry ID:",
     "sections": {
       "location": "Location",
@@ -127,7 +128,7 @@
       "email": "Email",
       "phone": "Phone Number",
       "articleTitle": "Title",
-      "contentBody": "Type in the best bress release ever createa",
+      "contentBody": "Write the best press release ever created",
       "assetValue": {
         "tokenSymbol": "Enter Token Symbol",
         "cryptoTicker": "Enter Crypto Ticker",

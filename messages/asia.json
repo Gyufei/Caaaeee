@@ -81,11 +81,12 @@
       "back": "返回",
       "steps": {
         "basicFields": "基本字段",
-        "contentBody": "内容正文", 
+        "contentBody": "内容正文",
         "promotion": "推广"
       }
     },
-    "title": "创建文章",
+    "CreateArticle": "创建文章",
+    "EditArticle": "编辑文章",
     "entryId": "条目ID：",
     "sections": {
       "location": "位置",

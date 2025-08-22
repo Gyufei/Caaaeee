@@ -13,7 +13,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useAccessToken, useAppStore } from '@/lib/store';
 import { cn, getAppPath } from '@/lib/utils';
 
-import Wallet from './icons/wallet';
 import { Button } from './ui/button';
 
 export default function UserMenu() {

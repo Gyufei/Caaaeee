@@ -25,7 +25,6 @@ export type WalletSignResponse = ApiResponse<WalletSignData>;
 
 export function useWalletSign() {
   const locale = useLocale();
-  const setUserId = useAppStore((state) => state.setUserId);
   const setAccessToken = useAppStore((state) => state.setAccessToken);
 
   return useMutation<WalletSignResponse, Error, WalletSignPayload>({
@@ -42,9 +41,6 @@ export function useWalletSign() {
       return response;
     },
     onSuccess: (res) => {
-      if (res?.data?.user_id) {
-        setUserId(res.data.user_id);
-      }
       if (res?.data?.access_token) {
         setAccessToken(res.data.access_token);
       }

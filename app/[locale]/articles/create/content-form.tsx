@@ -1172,7 +1172,10 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   </Button>
                   <Button
                     type="submit"
-                    className="h-10 px-6 bg-primary text-white hover:bg-primary/90"
+                    className={cn(
+                      'h-10 px-6 bg-primary text-white hover:bg-primary/90',
+                      currentStep > 0 ? 'block' : 'hidden'
+                    )}
                     disabled={isPending}
                   >
                     {isPending && submitDataStatus === 'published'

@@ -53,7 +53,7 @@ import { CateSearchInput } from './cate-search-input';
 import { TagSearchInput } from './tag-search-input';
 
 // 定义表单验证模式 - 创建函数以支持动态翻译
-const createFormSchema = (t: any) =>
+const createFormSchema = (t: ReturnType<typeof useTranslations>) =>
   z.object({
     // step 0
     country: z.string().min(1, t('validation.selectCountry')),

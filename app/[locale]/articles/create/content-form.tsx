@@ -240,7 +240,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
       toast.success(res.msg[locale === 'us' ? 'en' : 'zh']);
       router.push(`/articles`);
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Submit failed';
+      const message = e instanceof Error ? e.message : t('messages.submitFailed');
       toast.error(message);
     }
   };
@@ -251,7 +251,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
   function checkImage(image: HTMLImageElement) {
     if (image.width < 1024) {
-      toast.error('Image must be at least 1024px width');
+      toast.error(t('messages.imageWidthError'));
       return false;
     }
 
@@ -263,16 +263,25 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
       <div className="flex items-center justify-between px-6 h-14 border-b border-border">
         <div className="flex items-center gap-3 cursor-pointer" onClick={handleBack}>
           <Image src="/icons/arrow-left.svg" alt="arrow-left" width={20} height={20} />
-          <span className="text-sm font-medium text-foreground leading-[140%]">Back</span>
+          <span className="text-sm font-medium text-foreground leading-[140%]">
+            {t('navigation.back')}
+          </span>
         </div>
-        <FormStep steps={['Basic Fields', 'Content Body', 'Promotion']} currentStep={currentStep} />
+        <FormStep
+          steps={[
+            t('navigation.steps.basicFields'),
+            t('navigation.steps.contentBody'),
+            t('navigation.steps.promotion'),
+          ]}
+          currentStep={currentStep}
+        />
       </div>
       <div className="flex-col">
         <div className="py-8 px-6">
-          <div className="text-foreground leading-[140%] text-5xl">Create Article</div>
+          <div className="text-foreground leading-[140%] text-5xl">{t('title')}</div>
           {initFormData?.entry_id && (
             <div className="mt-[10px] text-xl leading-[140%] text-muted-foreground">
-              Entry ID: {initFormData.entry_id}
+              {t('entryId')} {initFormData.entry_id}
             </div>
           )}
         </div>
@@ -283,7 +292,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
               <>
                 {/* Location Section */}
                 <div className="px-6 py-5 flex flex-col gap-5">
-                  <h3 className="text-base font-medium text-foreground">Location</h3>
+                  <h3 className="text-base font-medium text-foreground">
+                    {t('sections.location')}
+                  </h3>
                   <div className="flex items-start gap-5">
                     <FormField
                       control={form.control}
@@ -291,7 +302,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Country / State
+                            {t('fields.country')}
                             <RequiredStart />
                           </FormLabel>
                           <Popover open={countryOpen} onOpenChange={setCountryOpen}>
@@ -306,18 +317,25 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 {field.value ? (
                                   field.value
                                 ) : isCountryCityLoading ? (
-                                  <span className="text-muted-foreground">Loading...</span>
+                                  <span className="text-muted-foreground">
+                                    {t('states.loading')}
+                                  </span>
                                 ) : (
-                                  <span className="text-muted-foreground">Country</span>
+                                  <span className="text-muted-foreground">
+                                    {t('placeholders.country')}
+                                  </span>
                                 )}
                                 <ChevronsUpDown className="opacity-50" />
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-[400px] p-0">
                               <Command>
-                                <CommandInput placeholder="Search country..." className="h-9" />
+                                <CommandInput
+                                  placeholder={t('search.searchCountry')}
+                                  className="h-9"
+                                />
                                 <CommandList>
-                                  <CommandEmpty>No data</CommandEmpty>
+                                  <CommandEmpty>{t('states.noData')}</CommandEmpty>
                                   <CommandGroup>
                                     {countryCityData &&
                                       Object.keys(countryCityData).map((country) => (
@@ -356,7 +374,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            City
+                            {t('fields.city')}
                             <RequiredStart />
                           </FormLabel>
                           <Popover open={cityOpen} onOpenChange={setCityOpen}>
@@ -371,22 +389,29 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 {field.value ? (
                                   field.value
                                 ) : isCountryCityLoading ? (
-                                  <span className="text-muted-foreground">Loading...</span>
+                                  <span className="text-muted-foreground">
+                                    {t('states.loading')}
+                                  </span>
                                 ) : !form.watch('country') ? (
                                   <span className="text-muted-foreground">
-                                    Please select a country first
+                                    {t('search.selectCountryFirst')}
                                   </span>
                                 ) : (
-                                  <span className="text-muted-foreground">City</span>
+                                  <span className="text-muted-foreground">
+                                    {t('placeholders.city')}
+                                  </span>
                                 )}
                                 <ChevronsUpDown className="opacity-50" />
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-[400px] p-0">
                               <Command>
-                                <CommandInput placeholder="Search city..." className="h-9" />
+                                <CommandInput
+                                  placeholder={t('search.searchCity')}
+                                  className="h-9"
+                                />
                                 <CommandList>
-                                  <CommandEmpty>No data</CommandEmpty>
+                                  <CommandEmpty>{t('states.noData')}</CommandEmpty>
                                   <CommandGroup>
                                     {countryCityData &&
                                       form.watch('country') &&
@@ -427,11 +452,10 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 {/* Social Media Section */}
                 <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
                   <div className="flex items-center gap-[10px]">
-                    <h3 className="text-base font-medium text-foreground">Social Media</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Add handle and hashtags to include in our socialmedia post for your press
-                      release.
-                    </p>
+                    <h3 className="text-base font-medium text-foreground">
+                      {t('sections.socialMedia')}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{t('descriptions.socialMedia')}</p>
                   </div>
                   <FormField
                     control={form.control}
@@ -439,17 +463,17 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     render={({ field }) => (
                       <FormItem className="flex flex-col gap-2">
                         <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                          Twitter Username
+                          {t('fields.twitterUsername')}
                           <RequiredStart />
                         </FormLabel>
                         <div className="flex w-[400px]">
                           <div className="relative">
                             <span className="absolute top-[14px] left-4 text-sm text-foreground leading-[140%]">
-                              https://x.com/
+                              {t('descriptions.twitterPrefix')}
                             </span>
                             <FormControl>
                               <Input
-                                placeholder="| yourid"
+                                placeholder={t('placeholders.twitterUsername')}
                                 className="flex-1 pl-[120px] h-12"
                                 {...field}
                               />
@@ -464,7 +488,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             className="flex items-center gap-2 h-12"
                           >
                             <Image src="/icons/twitter.svg" alt="twitter" width={20} height={20} />
-                            Connect
+                            {t('buttons.connect')}
                           </Button>
                         </div>
                         <FormMessage />
@@ -475,7 +499,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
                 {/* Related Asset Info Section */}
                 <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
-                  <h3 className="text-base font-medium text-foreground">Related Asset Info</h3>
+                  <h3 className="text-base font-medium text-foreground">
+                    {t('sections.relatedAsset')}
+                  </h3>
                   <div className="flex items-end gap-5">
                     <div className="flex flex-col gap-2">
                       <div className="w-fit flex gap-1 p-1 bg-[#F5F6F7] rounded-md">
@@ -488,7 +514,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           }`}
                           onClick={() => form.setValue('assetType', 'token-symbol')}
                         >
-                          Token Symbol
+                          {t('options.assetTypes.tokenSymbol')}
                         </button>
                         <button
                           type="button"
@@ -499,7 +525,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           }`}
                           onClick={() => form.setValue('assetType', 'crypto-ticker')}
                         >
-                          Crypto Ticker
+                          {t('options.assetTypes.cryptoTicker')}
                         </button>
                         <button
                           type="button"
@@ -510,7 +536,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           }`}
                           onClick={() => form.setValue('assetType', 'contract-address')}
                         >
-                          Contract Address
+                          {t('options.assetTypes.contractAddress')}
                         </button>
                       </div>
                       <FormField
@@ -520,7 +546,13 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <FormItem>
                             <FormControl>
                               <Input
-                                placeholder={`Enter ${form.watch('assetType') === 'token-symbol' ? 'Token Symbol' : form.watch('assetType') === 'crypto-ticker' ? 'Crypto Ticker' : 'Contract Address'}`}
+                                placeholder={
+                                  form.watch('assetType') === 'token-symbol'
+                                    ? t('placeholders.assetValue.tokenSymbol')
+                                    : form.watch('assetType') === 'crypto-ticker'
+                                      ? t('placeholders.assetValue.cryptoTicker')
+                                      : t('placeholders.assetValue.contractAddress')
+                                }
                                 className="w-[600px] !h-12"
                                 {...field}
                               />
@@ -536,19 +568,25 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Related Platform
+                            {t('options.relatedPlatform')}
                           </FormLabel>
                           <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger className="w-[200px] !h-12">
-                                <SelectValue placeholder="Select Platform" />
+                                <SelectValue placeholder={t('options.platforms.selectPlatform')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
-                              <SelectItem value="uniswap">Uniswap</SelectItem>
-                              <SelectItem value="pancakeswap">PancakeSwap</SelectItem>
-                              <SelectItem value="sushiswap">SushiSwap</SelectItem>
+                              <SelectItem value="none">{t('options.platforms.none')}</SelectItem>
+                              <SelectItem value="uniswap">
+                                {t('options.platforms.uniswap')}
+                              </SelectItem>
+                              <SelectItem value="pancakeswap">
+                                {t('options.platforms.pancakeswap')}
+                              </SelectItem>
+                              <SelectItem value="sushiswap">
+                                {t('options.platforms.sushiswap')}
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -560,7 +598,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
                 {/* Contact Section */}
                 <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
-                  <h3 className="text-base font-medium text-foreground">Contact</h3>
+                  <h3 className="text-base font-medium text-foreground">{t('sections.contact')}</h3>
                   <div className="flex items-start gap-5">
                     <FormField
                       control={form.control}
@@ -568,11 +606,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Full Name
+                            {t('fields.fullName')}
                             <RequiredStart />
                           </FormLabel>
                           <FormControl>
-                            <Input placeholder="Full Name" className="w-[400px] !h-12" {...field} />
+                            <Input
+                              placeholder={t('placeholders.fullName')}
+                              className="w-[400px] !h-12"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -584,10 +626,14 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Title
+                            {t('fields.title')}
                           </FormLabel>
                           <FormControl>
-                            <Input placeholder="Title" className="w-[400px] !h-12" {...field} />
+                            <Input
+                              placeholder={t('placeholders.title')}
+                              className="w-[400px] !h-12"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -601,11 +647,11 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Company
+                            {t('fields.company')}
                           </FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Company Name"
+                              placeholder={t('placeholders.company')}
                               className="w-[400px] !h-12"
                               {...field}
                             />
@@ -620,11 +666,11 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Email
+                            {t('fields.email')}
                           </FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Email"
+                              placeholder={t('placeholders.email')}
                               type="email"
                               className="w-[400px] !h-12"
                               {...field}
@@ -642,11 +688,11 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                            Phone
+                            {t('fields.phone')}
                           </FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Phone Number"
+                              placeholder={t('placeholders.phone')}
                               type="tel"
                               className="w-[400px] !h-12"
                               {...field}
@@ -671,11 +717,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     render={({ field }) => (
                       <FormItem className="flex flex-col gap-2">
                         <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                          Article Title
+                          {t('fields.articleTitle')}
                           <RequiredStart />
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Title" className="w-[640px] !h-12" {...field} />
+                          <Input
+                            placeholder={t('placeholders.articleTitle')}
+                            className="w-[640px] !h-12"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -685,7 +735,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
                 {/* Featured Image */}
                 <div className="px-6 py-5 flex flex-col gap-2">
-                  <h3 className="text-base font-medium text-foreground">Featured Image</h3>
+                  <h3 className="text-base font-medium text-foreground">
+                    {t('sections.featuredImage')}
+                  </h3>
                   <FormField
                     control={form.control}
                     name="featuredImage"
@@ -700,9 +752,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                               className="border border-dashed p-6 w-[640px]"
                               tipContent={
                                 <div className="text-xs text-center text-muted-foreground">
-                                  <div>Minimal width: 1024px</div>
-                                  <div>Recommended size: 1200x720px</div>
-                                  <div>Please use 15:9 ratio to avoid cropping</div>
+                                  <div>{t('descriptions.imageRequirements.minWidth')}</div>
+                                  <div>{t('descriptions.imageRequirements.recommended')}</div>
+                                  <div>{t('descriptions.imageRequirements.ratio')}</div>
                                 </div>
                               }
                             />
@@ -717,9 +769,11 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 {/* Article Content */}
                 <div className="px-6 py-5 flex flex-col gap-2">
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-base font-medium text-foreground">Article Content</h3>
+                    <h3 className="text-base font-medium text-foreground">
+                      {t('sections.articleContent')}
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Featured image & Title & Contacts - Will Be Added Automatically
+                      {t('descriptions.articleContent')}
                     </p>
                   </div>
                   <FormField
@@ -729,7 +783,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       <FormItem className="flex flex-col gap-2">
                         <FormControl>
                           <textarea
-                            placeholder="Type in the best bress release ever createa"
+                            placeholder={t('placeholders.contentBody')}
                             className="w-[640px] h-[320px] border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none hover:border-[#575657] focus-visible:border-[#06A17E] focus-visible:text-foreground"
                             {...field}
                           />
@@ -748,10 +802,14 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     render={({ field }) => (
                       <FormItem className="flex flex-col gap-2">
                         <FormLabel className="text-sm text-foreground leading-[140%] capitalize">
-                          Sub Title
+                          {t('fields.subTitle')}
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Title" className="w-[640px] !h-12" {...field} />
+                          <Input
+                            placeholder={t('placeholders.articleTitle')}
+                            className="w-[640px] !h-12"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -763,14 +821,16 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 <div className="px-6 py-5 flex flex-col gap-2">
                   <div className="flex items-center gap-5">
                     <div>
-                      <div className="text-sm text-foreground leading-[140%] mb-2">Tag</div>
+                      <div className="text-sm text-foreground leading-[140%] mb-2">
+                        {t('fields.tag')}
+                      </div>
                       <TagSearchInput
                         values={form.watch('tags') ?? []}
                         onChange={(vals) => form.setValue('tags', vals)}
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <div className="text-sm text-[#06A17E]">Include</div>
+                      <div className="text-sm text-[#06A17E]">{t('fields.include')}</div>
                       <SelectedChips
                         values={form.watch('tags') ?? []}
                         onRemove={(val) => {
@@ -786,14 +846,16 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 <div className="px-6 py-5 flex flex-col gap-2">
                   <div className="flex items-center gap-5">
                     <div>
-                      <div className="text-sm text-foreground leading-[140%] mb-2">Category</div>
+                      <div className="text-sm text-foreground leading-[140%] mb-2">
+                        {t('fields.category')}
+                      </div>
                       <CateSearchInput
                         value={form.watch('category') ?? ''}
                         onChange={(val) => form.setValue('category', val)}
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <div className="text-sm text-[#06A17E]">Include</div>
+                      <div className="text-sm text-[#06A17E]">{t('fields.include')}</div>
                       <SelectedChips
                         values={form.watch('category') ? [form.watch('category')!] : []}
                         onRemove={() => {
@@ -818,12 +880,12 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel className="text-sm text-foreground leading-[140%]">
-                            Total campaign budget
+                            {t('fields.totalCampaignBudget')}
                           </FormLabel>
                           <div className="flex items-center w-[640px] border border-border rounded-xs focus-within:border-primary">
                             <FormControl>
                               <NumberInput
-                                placeholder="None"
+                                placeholder={t('placeholders.totalBudget')}
                                 className="!h-12 border-none"
                                 {...field}
                               />
@@ -875,7 +937,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         <FormItem className="flex flex-col gap-2">
                           <div className="flex items-center gap-2">
                             <FormLabel className="text-sm text-foreground leading-[140%]">
-                              <span>Campaign budget optimization</span>
+                              <span>{t('fields.campaignBudgetOptimization')}</span>
                               <InfoIcon className="w-4 h-4 text-muted-foreground ml-1" />
                             </FormLabel>
                           </div>
@@ -889,7 +951,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 field.value ? 'text-foreground' : 'text-muted-foreground'
                               )}
                             >
-                              {field.value ? 'On' : 'Off'}
+                              {field.value ? t('states.on') : t('states.off')}
                             </span>
                           </div>
                         </FormItem>
@@ -904,7 +966,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         <FormItem className="flex flex-col gap-2">
                           <div className="flex items-center gap-2">
                             <FormLabel className="text-sm text-foreground leading-[140%]">
-                              Daily campaign budget (optional)
+                              {t('fields.dailyCampaignBudget')}
                             </FormLabel>
                             <div className="w-4 h-4 bg-muted rounded-full flex items-center justify-center">
                               <span className="text-xs text-muted-foreground">i</span>
@@ -913,7 +975,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <div className="flex items-center w-[640px] border border-border rounded-xs focus-within:border-primary">
                             <FormControl>
                               <NumberInput
-                                placeholder="150.00"
+                                placeholder={t('placeholders.dailyBudget')}
                                 className="!h-12 border-none"
                                 {...field}
                               />
@@ -960,8 +1022,10 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     {address && (
                       <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-1">
-                          <div className="text-foreground text-sm">Payment</div>
-                          <div className="text-xs text-muted-foreground">Connected: {address}</div>
+                          <div className="text-foreground text-sm">{t('sections.payment')}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {t('descriptions.connected')} {address}
+                          </div>
                         </div>
                         <div className="flex items-end gap-4">
                           <Button
@@ -969,10 +1033,10 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             variant="outline"
                             className="h-10 w-[180px] border-[#E88B00] bg-white text-[#E88B00] hover:bg-[#E88B00]/10 hover:text-[#E88B00]/90"
                           >
-                            Pay 100 SOL
+                            {t('buttons.payAmount')}
                           </Button>
                           <div className="text-xs text-muted-foreground underline decoration-dashed cursor-pointer hover:text-muted-foreground/90">
-                            Withdraw
+                            {t('buttons.withdraw')}
                           </div>
                         </div>
                       </div>
@@ -986,18 +1050,18 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       )}
                     >
                       <div className="flex-1 h-px bg-border"></div>
-                      <span className="text-sm text-foreground">Or</span>
+                      <span className="text-sm text-foreground">{t('separators.or')}</span>
                       <div className="flex-1 h-px bg-border"></div>
                     </div>
 
                     {/* Promote Later Option */}
                     <div className="flex items-center gap-2 mb-[80px]">
-                      <span className="text-xl text-foreground">Promote it later in</span>
+                      <span className="text-xl text-foreground">{t('descriptions.promoteIt')}</span>
                       <button
                         type="button"
                         className="text-xl text-[#06A17E] underline hover:text-[#06A17E]/80"
                       >
-                        Campaigns
+                        {t('buttons.promoteInCampaigns')}
                       </button>
                     </div>
                   </div>
@@ -1005,31 +1069,43 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   {!address && (
                     <div className="flex flex-col gap-6 ml-[100px]">
                       <div className="flex flex-col gap-9">
-                        <h3 className="text-sm font-medium text-foreground">Subtotal</h3>
+                        <h3 className="text-sm font-medium text-foreground">
+                          {t('sections.subtotal')}
+                        </h3>
                         <div className="flex flex-col gap-[18px]">
                           <div className="flex justify-between gap-8">
-                            <span className="text-sm text-foreground">Promotion Budget</span>
-                            <span className="text-sm text-foreground">$20</span>
+                            <span className="text-sm text-foreground">
+                              {t('costs.promotionBudget')}
+                            </span>
+                            <span className="text-sm text-foreground">
+                              {t('costs.promotionAmount')}
+                            </span>
                           </div>
                           <div className="flex justify-between gap-8">
-                            <span className="text-sm text-foreground">Research Auditing Fee</span>
-                            <span className="text-sm text-foreground">$5</span>
+                            <span className="text-sm text-foreground">
+                              {t('costs.researchAuditingFee')}
+                            </span>
+                            <span className="text-sm text-foreground">
+                              {t('costs.auditingAmount')}
+                            </span>
                           </div>
                           <div className="flex justify-end pt-7 border-t border-border">
-                            <span className="text-xl text-foreground">$200</span>
+                            <span className="text-xl text-foreground">
+                              {t('costs.totalAmount')}
+                            </span>
                           </div>
                         </div>
                       </div>
 
                       <div className="flex flex-col gap-4">
-                        <h3 className="text-sm text-foreground">Payment</h3>
+                        <h3 className="text-sm text-foreground">{t('sections.payment')}</h3>
                         <Button
                           onClick={handleConnectWallet}
                           type="button"
                           variant="outline"
                           className="h-10 px-6 border-[#06A17E] bg-white text-[#06A17E] hover:bg-[#06A17E]/10 hover:text-[#06A17E]/90"
                         >
-                          Connect Wallet
+                          {t('buttons.connectWallet')}
                         </Button>
                       </div>
                     </div>
@@ -1052,7 +1128,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       onClick={handlePrevStep}
                     >
                       <Image src="/icons/arrow-left.svg" alt="arrow-right" width={16} height={16} />
-                      Prev Step
+                      {t('buttons.prevStep')}
                     </Button>
                   )}
                   {currentStep < 2 && (
@@ -1062,7 +1138,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                       className="flex items-center gap-2 h-10 px-6 border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                       onClick={handleNextStep}
                     >
-                      Next Step
+                      {t('buttons.nextStep')}
                       <Image
                         src="/icons/arrow-left.svg"
                         alt="arrow-right"
@@ -1082,7 +1158,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     disabled={isPending}
                     onClick={form.handleSubmit(onSubmitWithStatus('draft'))}
                   >
-                    {isPending && submitDataStatus === 'draft' ? 'Saving...' : 'Save & Exit'}
+                    {isPending && submitDataStatus === 'draft'
+                      ? t('buttons.saving')
+                      : t('buttons.saveExit')}
                   </Button>
                   <Button
                     type="submit"
@@ -1090,8 +1168,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     disabled={isPending}
                   >
                     {isPending && submitDataStatus === 'published'
-                      ? 'Publishing...'
-                      : 'Direct Publish'}
+                      ? t('buttons.publishing')
+                      : t('buttons.directPublish')}
                   </Button>
                 </div>
               </div>
@@ -1113,8 +1191,12 @@ type SelectedChipsProps = {
 };
 
 function SelectedChips({ values, onRemove }: SelectedChipsProps) {
+  const t = useTranslations('ArticleForm');
+
   if (values.length === 0)
-    return <div className="text-sm text-muted-foreground h-12 flex items-center">None</div>;
+    return (
+      <div className="text-sm text-muted-foreground h-12 flex items-center">{t('states.none')}</div>
+    );
 
   return (
     <div className="flex flex-wrap gap-[10px]">

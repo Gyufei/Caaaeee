@@ -27,6 +27,8 @@ export default async function RootLayout({
     notFound();
   }
 
+  console.log(locale);
+
   return (
     <html lang={locale === 'us' ? 'en' : 'zh'}>
       <body className={`${SequelSansFont.variable} antialiased`}>

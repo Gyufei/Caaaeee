@@ -133,7 +133,7 @@
         "contractAddress": "输入合约地址"
       },
       "totalBudget": "无",
-      "dailyBudget": "150.00"
+      "dailyBudget": "0.00"
     },
     "options": {
       "assetTypes": {

@@ -1,6 +1,7 @@
 import { Check, Search } from 'lucide-react';
 
 import { useMemo, useState } from 'react';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 import { Input } from '@/components/ui/input';
 
@@ -14,27 +15,31 @@ type TagInputProps = {
 
 export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: TagInputProps) {
   const [inputValue, setInputValue] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const { data, isLoading } = useArticlesTags();
+
+  const ref = useOnclickOutside(() => {
+    setShowSuggestions(false);
+  });
 
   const suggestions = useMemo(() => {
     const allTags: Tag[] = data?.data ?? [];
     const keyword = inputValue.trim().toLowerCase();
-    
+
     if (keyword) {
       // 当有搜索关键词时，显示匹配的选项 + 已选中的选项
       const matchedTags = allTags.filter((t) => t.name.toLowerCase().includes(keyword));
       const selectedTags = allTags.filter((t) => values.includes(t.name));
-      
+
       // 合并匹配的标签和已选中的标签，去重
       const combined = [...matchedTags];
-      selectedTags.forEach(tag => {
-        if (!combined.find(t => t.id === tag.id)) {
+      selectedTags.forEach((tag) => {
+        if (!combined.find((t) => t.id === tag.id)) {
           combined.push(tag);
         }
       });
-      
+
       return combined;
     } else {
       // 没有搜索关键词时，显示所有选项
@@ -43,7 +48,6 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
   }, [data?.data, inputValue, values]);
 
   // 当输入框获得焦点时显示选项
-  const showSuggestions = isFocused;
 
   function handleSelect(tagName: string) {
     // 点击切换选中/取消选中
@@ -54,18 +58,8 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
     }
   }
 
-  function handleInputFocus() {
-    setIsFocused(true);
-  }
-
-  function handleInputBlur() {
-    if (inputValue.trim() === '') {
-      setIsFocused(false);
-    }
-  }
-
   return (
-    <div className="relative text-sm w-[400px]">
+    <div className="relative text-sm w-[400px]" ref={ref}>
       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
         <Search className="w-5 h-5" />
       </span>
@@ -74,8 +68,7 @@ export function TagSearchInput({ values, onChange, placeholder = 'Search...' }: 
         onChange={(e) => {
           setInputValue(e.target.value);
         }}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        onClick={() => setShowSuggestions(true)}
         placeholder={placeholder}
         className="pl-10 pr-4 h-12 py-[14px] rounded-xs focus:outline-none"
         aria-autocomplete="list"

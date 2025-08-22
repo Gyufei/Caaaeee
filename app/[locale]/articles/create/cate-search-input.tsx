@@ -1,6 +1,7 @@
 import { Check, Search } from 'lucide-react';
 
 import { useMemo, useState } from 'react';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 import { Input } from '@/components/ui/input';
 
@@ -14,9 +15,13 @@ type CateInputProps = {
 
 export function CateSearchInput({ value, onChange, placeholder = 'Search...' }: CateInputProps) {
   const [inputValue, setInputValue] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const { data, isLoading } = useArticlesCates();
+
+  const ref = useOnclickOutside(() => {
+    setShowSuggestions(false);
+  });
 
   const suggestions = useMemo(() => {
     const allCates: Category[] = data?.data ?? [];
@@ -39,26 +44,14 @@ export function CateSearchInput({ value, onChange, placeholder = 'Search...' }: 
     }
   }, [data?.data, inputValue, value]);
 
-  const showSuggestions = isFocused;
-
   function handleSelect(cateName: string) {
     onChange(cateName);
     setInputValue('');
-    setIsFocused(false);
-  }
-
-  function handleInputFocus() {
-    setIsFocused(true);
-  }
-
-  function handleInputBlur() {
-    if (inputValue.trim() === '') {
-      setIsFocused(false);
-    }
+    setShowSuggestions(false);
   }
 
   return (
-    <div className="relative text-sm w-[400px]">
+    <div className="relative text-sm w-[400px]" ref={ref}>
       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
         <Search className="w-5 h-5" />
       </span>
@@ -67,8 +60,7 @@ export function CateSearchInput({ value, onChange, placeholder = 'Search...' }: 
         onChange={(e) => {
           setInputValue(e.target.value);
         }}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        onClick={() => setShowSuggestions(true)}
         placeholder={placeholder}
         className="pl-10 pr-4 h-12 py-[14px] rounded-xs focus:outline-none"
         aria-autocomplete="list"

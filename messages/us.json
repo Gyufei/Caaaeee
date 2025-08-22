@@ -168,7 +168,7 @@
     "descriptions": {
       "socialMedia": "Add handle and hashtags to include in our socialmedia post for your press release.",
       "twitterPrefix": "https://x.com/",
-      "articleContent": "Featured image & Title & Contacts - Will Be Added Automatically",
+      "articleContent": "Featured Image & Title & Contacts - Will Be Added Automatically",
       "imageRequirements": {
         "minWidth": "Minimal width: 1024px",
         "recommended": "Recommended size: 1200x720px",

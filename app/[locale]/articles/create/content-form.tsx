@@ -269,45 +269,50 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
   }
 
   return (
-    <div className="flex-1 flex-col">
-      <div className="flex items-center justify-between px-6 h-14 border-b border-border">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={handleBack}>
+    <div className="flex-1 flex flex-col">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-0 sm:h-14 border-b border-border gap-3 sm:gap-0">
+        <div
+          className="flex items-center gap-3 cursor-pointer order-1 sm:order-none"
+          onClick={handleBack}
+        >
           <Image src="/icons/arrow-left.svg" alt="arrow-left" width={20} height={20} />
           <span className="text-sm font-medium text-foreground leading-[140%]">
             {t('navigation.back')}
           </span>
         </div>
-        <FormStep
-          steps={[
-            t('navigation.steps.basicFields'),
-            t('navigation.steps.contentBody'),
-            t('navigation.steps.promotion'),
-          ]}
-          currentStep={currentStep}
-        />
+        <div className="order-2 sm:order-none w-full sm:w-auto">
+          <FormStep
+            steps={[
+              t('navigation.steps.basicFields'),
+              t('navigation.steps.contentBody'),
+              t('navigation.steps.promotion'),
+            ]}
+            currentStep={currentStep}
+          />
+        </div>
       </div>
-      <div className="flex-col">
-        <div className="py-8 px-6">
-          <div className="text-foreground leading-[140%] text-5xl">
+      <div className="flex-1 flex flex-col">
+        <div className="py-4 sm:py-8 px-4 sm:px-6">
+          <div className="text-foreground leading-[140%] text-2xl sm:text-3xl lg:text-5xl">
             {initFormData?.entry_id ? t('EditArticle') : t('CreateArticle')}
           </div>
           {initFormData?.entry_id && (
-            <div className="mt-[10px] text-xl leading-[140%] text-muted-foreground">
+            <div className="mt-[10px] text-lg sm:text-xl leading-[140%] text-muted-foreground">
               {t('entryId')} {initFormData.entry_id}
             </div>
           )}
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmitWithStatus('published'))}>
+          <form onSubmit={form.handleSubmit(onSubmitWithStatus('published'))} className="flex-1 flex flex-col">
             {currentStep === 0 && (
               <>
                 {/* Location Section */}
-                <div className="px-6 py-5 flex flex-col gap-5">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5 border-t border-border">
                   <h3 className="text-base font-medium text-foreground">
                     {t('sections.location')}
                   </h3>
-                  <div className="flex items-start gap-5">
+                  <div className="flex flex-col gap-4 sm:gap-5">
                     <FormField
                       control={form.control}
                       name="country"
@@ -323,7 +328,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 variant="outline"
                                 role="combobox"
                                 aria-expanded={countryOpen}
-                                className="w-[400px] justify-between !h-12"
+                                className="w-full justify-between !h-12"
                                 disabled={isCountryCityLoading}
                               >
                                 {field.value ? (
@@ -340,7 +345,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 <ChevronsUpDown className="opacity-50" />
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[400px] p-0">
+                            <PopoverContent className="w-full p-0">
                               <Command>
                                 <CommandInput
                                   placeholder={t('search.searchCountry')}
@@ -395,7 +400,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 variant="outline"
                                 role="combobox"
                                 aria-expanded={cityOpen}
-                                className="w-[400px] justify-between !h-12"
+                                className="w-full justify-between !h-12"
                                 disabled={isCountryCityLoading || !form.watch('country')}
                               >
                                 {field.value ? (
@@ -416,7 +421,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                 <ChevronsUpDown className="opacity-50" />
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[400px] p-0">
+                            <PopoverContent className="w-full p-0">
                               <Command>
                                 <CommandInput
                                   placeholder={t('search.searchCity')}
@@ -458,8 +463,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Social Media Section */}
-                <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
-                  <div className="flex items-center gap-[10px]">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5 border-t border-border">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-[10px]">
                     <h3 className="text-base font-medium text-foreground">
                       {t('sections.socialMedia')}
                     </h3>
@@ -474,15 +479,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           {t('fields.twitterUsername')}
                           <RequiredStart />
                         </FormLabel>
-                        <div className="flex w-[400px]">
-                          <div className="relative">
+                        <div className="flex flex-col sm:flex-row w-full gap-2">
+                          <div className="relative flex-1">
                             <span className="absolute top-[14px] left-4 text-sm text-foreground leading-[140%]">
                               {t('descriptions.twitterPrefix')}
                             </span>
                             <FormControl>
                               <Input
                                 placeholder={t('placeholders.twitterUsername')}
-                                className="flex-1 pl-[120px] h-12"
+                                className="w-full pl-[120px] h-12"
                                 {...field}
                               />
                             </FormControl>
@@ -493,7 +498,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                               e.stopPropagation();
                             }}
                             variant="outline"
-                            className="flex items-center gap-2 h-12"
+                            className="flex items-center justify-center gap-2 h-12 w-full sm:w-auto"
                           >
                             <Image src="/icons/twitter.svg" alt="twitter" width={20} height={20} />
                             {t('buttons.connect')}
@@ -506,16 +511,16 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Related Asset Info Section */}
-                <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5 border-t border-border">
                   <h3 className="text-base font-medium text-foreground">
                     {t('sections.relatedAsset')}
                   </h3>
-                  <div className="flex items-end gap-5">
+                  <div className="flex flex-col gap-4 sm:gap-5">
                     <div className="flex flex-col gap-2">
-                      <div className="w-fit flex gap-1 p-1 bg-[#F5F6F7] rounded-md">
+                      <div className="w-full sm:w-fit flex gap-1 p-1 bg-[#F5F6F7] rounded-md">
                         <button
                           type="button"
-                          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                          className={`px-3 py-1.5 text-sm rounded-md transition-colors flex-1 sm:flex-none ${
                             form.watch('assetType') === 'token-symbol'
                               ? 'bg-white text-foreground shadow-sm'
                               : 'text-muted-foreground hover:text-foreground'
@@ -526,7 +531,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         </button>
                         <button
                           type="button"
-                          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                          className={`px-3 py-1.5 text-sm rounded-md transition-colors flex-1 sm:flex-none ${
                             form.watch('assetType') === 'crypto-ticker'
                               ? 'bg-white text-foreground shadow-sm'
                               : 'text-muted-foreground hover:text-foreground'
@@ -537,7 +542,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         </button>
                         <button
                           type="button"
-                          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                          className={`px-3 py-1.5 text-sm rounded-md transition-colors flex-1 sm:flex-none ${
                             form.watch('assetType') === 'contract-address'
                               ? 'bg-white text-foreground shadow-sm'
                               : 'text-muted-foreground hover:text-foreground'
@@ -561,7 +566,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                       ? t('placeholders.assetValue.cryptoTicker')
                                       : t('placeholders.assetValue.contractAddress')
                                 }
-                                className="w-[600px] !h-12"
+                                className="w-full !h-12"
                                 {...field}
                               />
                             </FormControl>
@@ -580,7 +585,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           </FormLabel>
                           <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
-                              <SelectTrigger className="w-[200px] !h-12">
+                              <SelectTrigger className="w-full !h-12">
                                 <SelectValue placeholder={t('options.platforms.selectPlatform')} />
                               </SelectTrigger>
                             </FormControl>
@@ -605,9 +610,9 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Contact Section */}
-                <div className="px-6 py-5 flex flex-col gap-5 border-t border-border">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5 border-t border-border">
                   <h3 className="text-base font-medium text-foreground">{t('sections.contact')}</h3>
-                  <div className="flex items-start gap-5">
+                  <div className="flex flex-col gap-4 sm:gap-5">
                     <FormField
                       control={form.control}
                       name="fullName"
@@ -620,7 +625,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <FormControl>
                             <Input
                               placeholder={t('placeholders.fullName')}
-                              className="w-[400px] !h-12"
+                              className="w-full !h-12"
                               {...field}
                             />
                           </FormControl>
@@ -639,7 +644,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <FormControl>
                             <Input
                               placeholder={t('placeholders.title')}
-                              className="w-[400px] !h-12"
+                              className="w-full !h-12"
                               {...field}
                             />
                           </FormControl>
@@ -647,8 +652,6 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         </FormItem>
                       )}
                     />
-                  </div>
-                  <div className="flex items-start gap-5">
                     <FormField
                       control={form.control}
                       name="company"
@@ -660,7 +663,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <FormControl>
                             <Input
                               placeholder={t('placeholders.company')}
-                              className="w-[400px] !h-12"
+                              className="w-full !h-12"
                               {...field}
                             />
                           </FormControl>
@@ -680,7 +683,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             <Input
                               placeholder={t('placeholders.email')}
                               type="email"
-                              className="w-[400px] !h-12"
+                              className="w-full !h-12"
                               {...field}
                             />
                           </FormControl>
@@ -688,8 +691,6 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         </FormItem>
                       )}
                     />
-                  </div>
-                  <div className="flex items-center gap-5">
                     <FormField
                       control={form.control}
                       name="phone"
@@ -702,7 +703,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             <Input
                               placeholder={t('placeholders.phone')}
                               type="tel"
-                              className="w-[400px] !h-12"
+                              className="w-full !h-12"
                               {...field}
                             />
                           </FormControl>
@@ -718,7 +719,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
             {currentStep === 1 && (
               <>
                 {/* Article Title */}
-                <div className="px-6 py-5 flex flex-col gap-5">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5">
                   <FormField
                     control={form.control}
                     name="articleTitle"
@@ -731,7 +732,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         <FormControl>
                           <Input
                             placeholder={t('placeholders.articleTitle')}
-                            className="w-[640px] !h-12"
+                            className="w-full !h-12"
                             {...field}
                           />
                         </FormControl>
@@ -742,7 +743,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Featured Image */}
-                <div className="px-6 py-5 flex flex-col gap-2">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-2">
                   <h3 className="text-base font-medium text-foreground">
                     {t('sections.featuredImage')}
                   </h3>
@@ -752,12 +753,12 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     render={({ field }) => (
                       <FormItem className="flex flex-col gap-2">
                         <FormControl>
-                          <div className="w-full max-w-[640px]">
+                          <div className="w-full">
                             <Upload
                               value={field.value}
                               onChange={field.onChange}
                               checkFunc={checkImage}
-                              className="border border-dashed p-6 w-[640px]"
+                              className="border border-dashed p-3 sm:p-6 w-full"
                               tipContent={
                                 <div className="text-xs text-center text-muted-foreground">
                                   <div>{t('descriptions.imageRequirements.minWidth')}</div>
@@ -775,7 +776,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Article Content */}
-                <div className="px-6 py-5 flex flex-col gap-2">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-2">
                   <div className="flex flex-col gap-1">
                     <h3 className="text-base font-medium text-foreground">
                       {t('sections.articleContent')}
@@ -795,7 +796,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           </div> */}
                           <textarea
                             placeholder={t('placeholders.contentBody')}
-                            className="w-[640px] h-[320px] border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none hover:border-[#575657] focus-visible:border-[#06A17E] focus-visible:text-foreground"
+                            className="w-full h-[200px] sm:h-[320px] border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none hover:border-[#575657] focus-visible:border-[#06A17E] focus-visible:text-foreground"
                             {...field}
                           />
                         </FormControl>
@@ -806,7 +807,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Sub Title */}
-                <div className="px-6 py-5 mt-[10px] flex flex-col">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 mt-[10px] flex flex-col">
                   <FormField
                     control={form.control}
                     name="subTitle"
@@ -818,7 +819,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         <FormControl>
                           <Input
                             placeholder={t('placeholders.articleTitle')}
-                            className="w-[640px] !h-12"
+                            className="w-full !h-12"
                             {...field}
                           />
                         </FormControl>
@@ -829,8 +830,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Tag */}
-                <div className="px-6 py-5 flex flex-col gap-2">
-                  <div className="flex items-center gap-5">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-2">
+                  <div className="flex flex-col gap-4 sm:gap-5">
                     <div>
                       <div className="text-sm text-foreground leading-[140%] mb-2">
                         {t('fields.tag')}
@@ -854,8 +855,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                 </div>
 
                 {/* Category */}
-                <div className="px-6 py-5 flex flex-col gap-2">
-                  <div className="flex items-center gap-5">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col gap-2">
+                  <div className="flex flex-col gap-4 sm:gap-5">
                     <div>
                       <div className="text-sm text-foreground leading-[140%] mb-2">
                         {t('fields.category')}
@@ -882,8 +883,8 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
             {currentStep === 2 && (
               <>
                 {/* Campaign Budget Settings */}
-                <div className="px-6 py-5 flex justify-start border-t border-border">
-                  <div className="flex flex-col gap-[30px]">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 flex flex-col lg:flex-row justify-start border-t border-border">
+                  <div className="flex flex-col gap-6 sm:gap-[30px]">
                     {/* Total Campaign Budget */}
                     <FormField
                       control={form.control}
@@ -893,7 +894,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           <FormLabel className="text-sm text-foreground leading-[140%]">
                             {t('fields.totalCampaignBudget')}
                           </FormLabel>
-                          <div className="flex items-center w-[640px] border border-border rounded-xs focus-within:border-primary">
+                          <div className="flex items-center w-full border border-border rounded-xs focus-within:border-primary">
                             <FormControl>
                               <NumberInput
                                 placeholder={t('placeholders.totalBudget')}
@@ -911,7 +912,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                       onValueChange={currencyField.onChange}
                                       value={currencyField.value}
                                     >
-                                      <SelectTrigger className="w-[108px] !h-12 !border-l border-r-0 border-t-0 border-b-0 hover:border-border focus:border-border text-sm">
+                                      <SelectTrigger className="w-[80px] sm:w-[108px] !h-12 !border-l border-r-0 border-t-0 border-b-0 hover:border-border focus:border-border text-sm">
                                         <SelectValue />
                                       </SelectTrigger>
                                       <SelectContent>
@@ -983,7 +984,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                               <span className="text-xs text-muted-foreground">i</span>
                             </div>
                           </div>
-                          <div className="flex items-center w-[640px] border border-border rounded-xs focus-within:border-primary">
+                          <div className="flex items-center w-full border border-border rounded-xs focus-within:border-primary">
                             <FormControl>
                               <NumberInput
                                 placeholder={t('placeholders.dailyBudget')}
@@ -1001,7 +1002,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                                       onValueChange={currencyField.onChange}
                                       value={currencyField.value}
                                     >
-                                      <SelectTrigger className="w-[108px] !h-12 !border-l border-r-0 border-t-0 border-b-0 hover:border-border focus:border-border text-sm">
+                                      <SelectTrigger className="w-[80px] sm:w-[108px] !h-12 !border-l border-r-0 border-t-0 border-b-0 hover:border-border focus:border-border text-sm">
                                         <SelectValue />
                                       </SelectTrigger>
                                       <SelectContent>
@@ -1038,15 +1039,15 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                             {t('descriptions.connected')} {address}
                           </div>
                         </div>
-                        <div className="flex items-end gap-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
                           <Button
                             type="button"
                             variant="outline"
-                            className="h-10 w-[180px] border-[#E88B00] bg-white text-[#E88B00] hover:bg-[#E88B00]/10 hover:text-[#E88B00]/90"
+                            className="h-10 w-full sm:w-[180px] border-[#E88B00] bg-white text-[#E88B00] hover:bg-[#E88B00]/10 hover:text-[#E88B00]/90"
                           >
                             {t('buttons.payAmount')}
                           </Button>
-                          <div className="text-xs text-muted-foreground underline decoration-dashed cursor-pointer hover:text-muted-foreground/90">
+                          <div className="text-xs text-muted-foreground underline decoration-dashed cursor-pointer hover:text-muted-foreground/90 text-center sm:text-left">
                             {t('buttons.withdraw')}
                           </div>
                         </div>
@@ -1066,7 +1067,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     </div>
 
                     {/* Promote Later Option */}
-                    <div className="flex items-center gap-2 mb-[80px]">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-[80px]">
                       <span className="text-xl text-foreground">{t('descriptions.promoteIt')}</span>
                       <button
                         type="button"
@@ -1078,7 +1079,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   </div>
 
                   {!address && (
-                    <div className="flex flex-col gap-6 ml-[100px]">
+                    <div className="flex flex-col gap-6 mt-6 lg:mt-0 lg:ml-[100px]">
                       <div className="flex flex-col gap-9">
                         <h3 className="text-sm font-medium text-foreground">
                           {t('sections.subtotal')}
@@ -1114,7 +1115,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                           onClick={handleConnectWallet}
                           type="button"
                           variant="outline"
-                          className="h-10 px-6 border-[#06A17E] bg-white text-[#06A17E] hover:bg-[#06A17E]/10 hover:text-[#06A17E]/90"
+                          className="h-10 px-4 sm:px-6 w-full border-[#06A17E] bg-white text-[#06A17E] hover:bg-[#06A17E]/10 hover:text-[#06A17E]/90"
                         >
                           {t('buttons.connectWallet')}
                         </Button>
@@ -1128,14 +1129,14 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
             )}
 
             {/* Form Bottom Buttons */}
-            <div className="border-t border-border px-6 py-4 mt-[100px]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+            <div className="border-t border-border px-4 sm:px-6 py-4 mt-auto">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                   {currentStep > 0 && (
                     <Button
                       type="button"
                       variant="outline"
-                      className="flex items-center gap-2 h-10 px-6 border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      className="flex items-center justify-center gap-2 h-10 px-4 sm:px-6 w-full sm:w-auto border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                       onClick={handlePrevStep}
                     >
                       <Image src="/icons/arrow-left.svg" alt="arrow-right" width={16} height={16} />
@@ -1146,7 +1147,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                     <Button
                       type="button"
                       variant="outline"
-                      className="flex items-center gap-2 h-10 px-6 border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      className="flex items-center justify-center gap-2 h-10 px-4 sm:px-6 w-full sm:w-auto border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                       onClick={handleNextStep}
                     >
                       {t('buttons.nextStep')}
@@ -1161,12 +1162,12 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   )}
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-3">
                   <Button
                     type="button"
                     variant="outline"
                     className={cn(
-                      'h-10 px-6 border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90',
+                      'h-10 px-4 sm:px-6 w-full sm:w-auto border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90',
                       currentStep > 0 ? 'block' : 'hidden'
                     )}
                     disabled={isPending}
@@ -1179,7 +1180,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   <Button
                     type="submit"
                     className={cn(
-                      'h-10 px-6 bg-primary text-white hover:bg-primary/90',
+                      'h-10 px-4 sm:px-6 w-full sm:w-auto bg-primary text-white hover:bg-primary/90',
                       currentStep > 0 ? 'block' : 'hidden'
                     )}
                     disabled={isPending}

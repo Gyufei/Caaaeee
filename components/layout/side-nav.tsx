@@ -15,7 +15,7 @@ const CAMPAIGNS_PATH = '/campaigns';
 
 export default function SideNav() {
   return (
-    <div className="w-[270px] px-6 py-5 flex flex-col gap-1 border-r border-border">
+    <div className="w-[270px] px-6 py-5 flex flex-col gap-1 border-r border-border sm:flex hidden">
       <NavItem
         label="Home"
         icon="/icons/home.svg"

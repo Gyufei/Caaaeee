@@ -1130,27 +1130,27 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
 
             {/* Form Bottom Buttons */}
             <div className="border-t border-border px-4 sm:px-6 py-4 mt-auto">
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+              <div className="flex items-center justify-between gap-3">
+                {/* Left side - Navigation buttons (icon only on mobile) */}
+                <div className="flex items-center gap-2">
                   {currentStep > 0 && (
                     <Button
                       type="button"
                       variant="outline"
-                      className="flex items-center justify-center gap-2 h-10 px-4 sm:px-6 w-full sm:w-auto border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      className="flex items-center justify-center h-10 w-10 sm:w-auto sm:px-4 sm:gap-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                       onClick={handlePrevStep}
                     >
-                      <Image src="/icons/arrow-left.svg" alt="arrow-right" width={16} height={16} />
-                      {t('buttons.prevStep')}
+                      <Image src="/icons/arrow-left.svg" alt="arrow-left" width={16} height={16} />
+                      <span className="hidden sm:inline">{t('buttons.prevStep')}</span>
                     </Button>
                   )}
                   {currentStep < 2 && (
                     <Button
                       type="button"
                       variant="outline"
-                      className="flex items-center justify-center gap-2 h-10 px-4 sm:px-6 w-full sm:w-auto border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      className="flex items-center justify-center h-10 w-10 sm:w-auto sm:px-4 sm:gap-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                       onClick={handleNextStep}
                     >
-                      {t('buttons.nextStep')}
                       <Image
                         src="/icons/arrow-left.svg"
                         alt="arrow-right"
@@ -1158,16 +1158,18 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                         width={16}
                         height={16}
                       />
+                      <span className="hidden sm:inline">{t('buttons.nextStep')}</span>
                     </Button>
                   )}
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-3">
+                {/* Right side - Action buttons */}
+                <div className="flex items-center gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     className={cn(
-                      'h-10 px-4 sm:px-6 w-full sm:w-auto border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90',
+                      'h-10 px-3 sm:px-4 border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary/90 text-sm',
                       currentStep > 0 ? 'block' : 'hidden'
                     )}
                     disabled={isPending}
@@ -1180,7 +1182,7 @@ export default function CreateArticle({ initFormData }: { initFormData?: Content
                   <Button
                     type="submit"
                     className={cn(
-                      'h-10 px-4 sm:px-6 w-full sm:w-auto bg-primary text-white hover:bg-primary/90',
+                      'h-10 px-3 sm:px-4 bg-primary text-white hover:bg-primary/90 text-sm',
                       currentStep > 0 ? 'block' : 'hidden'
                     )}
                     disabled={isPending}

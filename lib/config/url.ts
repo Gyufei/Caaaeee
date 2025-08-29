@@ -1,1 +1,1 @@
-export const APP_PATH = 'https://de-f.vercel.app';
+export const APP_PATH = 'https://dev.detake.com';
